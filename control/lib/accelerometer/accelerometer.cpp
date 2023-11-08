@@ -16,9 +16,9 @@ void buildAccelerometer(void){
 }
 
 char getAxis(void){
-    char ans = -1;
+    char ans = 'E';
     if (accel.available()) {      
-        if (accel.isRight()) ans = 'F';
+        if (accel.isRight()) ans = 'R';
         else if (accel.isLeft()) ans = 'L';
         else if (accel.isUp()) ans = 'U';
         else if (accel.isDown()) ans = 'D';
