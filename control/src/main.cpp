@@ -10,7 +10,5 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(getAxis());
-  Serial.print(" ");
-  Serial.println(readTrigger());
+  send_packet(getAxis(), readTrigger());
 }
