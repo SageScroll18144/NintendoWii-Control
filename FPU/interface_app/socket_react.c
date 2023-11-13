@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <arpa/inet.h>
+#include <unistd.h> 
 #include "socket_react.h"
 #include "../device_state/device_state.h"
 

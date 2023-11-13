@@ -6,4 +6,5 @@
 void build_socket_server(void);
 void send_socket_server(packet_state buffer);
 void close_server(void);
+
 #endif

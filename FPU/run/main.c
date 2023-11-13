@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../serial/serial_com.h"
 #include "../device_state/device_state.h"
+#include "../interface_app/socket_react.h"
 
 int main(){
     packet_state data_received_from_ESP;

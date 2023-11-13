@@ -1,0 +1,1 @@
+gcc run/main.c serial/*.c interface_app/*.c  -o fpu_exe.out && ./fpu_exe.out
