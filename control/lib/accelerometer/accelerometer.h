@@ -3,5 +3,6 @@
 
 void buildAccelerometer(void);
 char getAxis(void);
+void debugAxis(void);
 
 #endif

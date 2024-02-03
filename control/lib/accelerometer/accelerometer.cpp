@@ -27,3 +27,8 @@ char getAxis(void){
 
     return ans;
 }
+
+void debugAxis(void){
+    Serial.print("getX() | getY() | getZ(): "); Serial.print(accel.getX()); Serial.print(" "); Serial.print(accel.getY()); Serial.print(" "); Serial.println(accel.getZ());
+    Serial.print("getCalculatedX() | getCalculatedY() | getCalculatedZ(): "); Serial.print(accel.getCalculatedX()); Serial.print(" "); Serial.print(accel.getCalculatedY()); Serial.print(" "); Serial.println(accel.getCalculatedZ());
+}
