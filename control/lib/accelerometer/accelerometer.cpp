@@ -15,18 +15,33 @@ void buildAccelerometer(void){
     }
 }
 
-char getAxis(void){
+char sideAxis(void){
     char ans = 'E';
     if (accel.available()) {      
-        if (accel.isRight()) ans = 'R';
-        else if (accel.isLeft()) ans = 'L';
-        else if (accel.isUp()) ans = 'U';
-        else if (accel.isDown()) ans = 'D';
-        else if (accel.isFlat()) ans = 'F';
+        // if (accel.isRight()) ans = 'R';
+        // else if (accel.isLeft()) ans = 'L';
+        // else if (accel.isUp()) ans = 'U';
+        // else if (accel.isDown()) ans = 'D';
+        // else if (accel.isFlat()) ans = 'F';
+
+        if(accel.getCalculatedY() <= -0.1) ans =  'L';
+        else if(accel.getCalculatedY() > 0.49) ans =  'R';
+        else if(accel.getCalculatedZ() <= 0.20) ans =  'D';
+        else if(accel.getCalculatedZ() >= 0.80) ans =  'U';     
+        else ans = 'F';
     }
 
     return ans;
 }
+
+float getAxisY(void){
+    return accel.getCalculatedY();
+}
+
+float getAxisZ(void){
+    return accel.getCalculatedZ();
+}
+
 
 void debugAxis(void){
     Serial.print("getX() | getY() | getZ(): "); Serial.print(accel.getX()); Serial.print(" "); Serial.print(accel.getY()); Serial.print(" "); Serial.println(accel.getZ());

@@ -2,7 +2,9 @@
 #define ACCELEROMETER_H
 
 void buildAccelerometer(void);
-char getAxis(void);
+char sideAxis(void);
+float getAxisY(void);
+float getAxisZ(void);
 void debugAxis(void);
 
 #endif

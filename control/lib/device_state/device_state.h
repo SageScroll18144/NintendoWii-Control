@@ -2,6 +2,7 @@
 #define DEVICE_STATE_H
 
 typedef struct{
+    float angle_width, angle_height;
     char direction;
     bool shot;
 }packet_state;

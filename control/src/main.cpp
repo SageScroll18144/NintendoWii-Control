@@ -26,8 +26,8 @@ void setup() {
 
   // Once ESPNow is successfully Init, we will register for Send CB to
   // get the status of Trasnmitted packet
-  esp_now_register_recv_cb(OnDataRecv);
-  esp_now_register_send_cb(send_espnow_packet);
+  if(!MODE) esp_now_register_recv_cb(OnDataRecv);
+  else if(MODE == 1) esp_now_register_send_cb(send_espnow_packet);
 
   // Register peer
   memcpy(peerInfo.peer_addr, broadcastAddress, 6);
@@ -35,29 +35,29 @@ void setup() {
   peerInfo.encrypt = false;
   
   // Add peer        
-  if (esp_now_add_peer(&peerInfo) != ESP_OK){
+  if (MODE != 2 && esp_now_add_peer(&peerInfo) != ESP_OK){
     Serial.println("Failed to add peer");
     return;
   }
 }
 
 void loop() {
-  switch (MODE){
-    case 1:
-      packet_state state;
-      state.direction = getAxis();
-      state.shot = readTrigger();
+  if(MODE == 1){
+    packet_state state;
+    state.direction = sideAxis();
+    state.shot = readTrigger();
+    state.angle_width = getAxisY();
+    state.angle_height = getAxisZ();
 
-      Serial.print("---------------\nDirection read: "); Serial.println(state.direction);
-      Serial.print("Shot read: "); Serial.print(state.shot);Serial.println("\n---------------");
+    Serial.print("---------------\nDirection read: "); Serial.println(state.direction);
+    Serial.print("Angle read: "); Serial.println(state.angle_width);
+    Serial.print("Angle read: "); Serial.println(state.angle_height);
+    Serial.print("Shot read: "); Serial.print(state.shot);Serial.println("\n---------------");
 
-      esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &state, sizeof(state));
-    break;
-    case 2:
-      debugAxis();
-    break;
-    default:
-    break;
+    esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &state, sizeof(state));
+  }else if(MODE == 2){
+    debugAxis();
+    delay(500);
   }
 
 }
