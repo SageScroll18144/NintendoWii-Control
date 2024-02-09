@@ -18,7 +18,7 @@ void build_socket_server(void){
     // Configure o endereço do servidor
     memset(&servidorAddr, 0, sizeof(servidorAddr));
     servidorAddr.sin_family = AF_INET;
-    servidorAddr.sin_port = htons(12345); // Substitua pelo número da porta desejado
+    servidorAddr.sin_port = htons(9000); // Substitua pelo número da porta desejado
     servidorAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // Substitua pelo endereço IP do servidor
 
 }

@@ -7,14 +7,14 @@ packet_state packet;
 
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len){
   
-  
   memcpy(&packet, incomingData, sizeof(packet));
 
-  Serial.print("---------------\nDirection read: "); Serial.println(packet.direction);
-  Serial.print("Shot read: "); Serial.print(packet.shot);Serial.println("\n---------------");
+  // Serial.print("---------------\nDirection read: "); Serial.println(packet.direction);
+  // Serial.print("Shot read: "); Serial.print(packet.shot);Serial.println("\n---------------");
 
-  // Serial.write((uint8_t*)&packet, sizeof(packet));
-  // Serial.flush();
+  Serial.write(packet.direction); //(uint8_t*)&packet, sizeof(packet)
+  delay(10);
+  //Serial.flush();
 }
 
 void send_espnow_packet(const uint8_t *mac_addr, esp_now_send_status_t status) {

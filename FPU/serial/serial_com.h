@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "../device_state/device_state.h"
 
-#define PORT "/dev/ttyACM0"
+#define PORT "/dev/ttyUSB0"
 
 void open_serial(void);
 void setup_com(void);
