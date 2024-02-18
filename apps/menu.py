@@ -61,7 +61,7 @@ image_path='./images/tetris.jpg',
 )
 
 
-menu = pygame_menu.Menu('ARCADE GAMES', 600, 400,
+menu = pygame_menu.Menu('                    ARCADE GAMES', 600, 400,
              theme= meu_tema, columns=2, rows=5)
 
 default_button_config = {'font_size': 80, 'padding': (10, 100), 'margin': (0, 10)}
