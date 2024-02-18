@@ -5,12 +5,22 @@ pygame.init()
 surface = pygame.display.set_mode((600, 400))
 
 
-
-def set_difficulty(value):
+def start_tetris():
     # Do the job here !
     pass
-
-def start_the_game():
+def start_flappy():
+    # Do the job here !
+    pass
+def start_space():
+    # Do the job here !
+    pass
+def start_bomber():
+    # Do the job here !
+    pass
+def start_doodle():
+    # Do the job here !
+    pass
+def start_agario():
     # Do the job here !
     pass
   
@@ -30,9 +40,7 @@ meu_tema = pygame_menu.themes.Theme(
     
 )
 
-Doodle_Image = pygame_menu.baseimage.BaseImage(
-    image_path='./Doodle.png',
-)
+
 Dudu_Image = pygame_menu.baseimage.BaseImage(
 image_path='./DDtitle.png',
 )
@@ -57,16 +65,16 @@ menu = pygame_menu.Menu('                    ARCADE GAMES', 600, 400,
                        theme= meu_tema)
 
 menu.add.vertical_margin(50)
-menu.add.button('                ', start_the_game(), background_color=Dudu_Image, font_size=80   )
-menu.add.button('                ', start_the_game(), background_color=Bomber_Image, font_size=80)
+menu.add.button('                ', start_doodle(), background_color=Dudu_Image, font_size=80   )
+menu.add.button('                ', start_bomber(), background_color=Bomber_Image, font_size=80)
 menu.add.vertical_margin(20)
-menu.add.button('                ', start_the_game(),  background_color=Agario_Image, font_size=80 )
+menu.add.button('                ', start_agario(),  background_color=Agario_Image, font_size=80 )
 menu.add.vertical_margin(20)
-menu.add.button('                ', start_the_game(), background_color=Flappy_Image, font_size=80)
+menu.add.button('                ', start_flappy(), background_color=Flappy_Image, font_size=80)
 menu.add.vertical_margin(20)
-menu.add.button('                ', start_the_game(), background_color=Tetris_Image, font_size=80)
+menu.add.button('                ', start_flappy(), background_color=Tetris_Image, font_size=80)
 menu.add.vertical_margin(20)
-menu.add.button('                ', start_the_game(), background_color=Space_Image, font_size=80)
+menu.add.button('                ', start_space(), background_color=Space_Image, font_size=80)
 menu.add.vertical_margin(20)
 menu.add.button('Fechar', pygame_menu.events.EXIT)
 
