@@ -60,7 +60,7 @@ def main_background():
     surface.fill(COLOR_BACKGROUND)
 
 
-def menu_loop():
+def main():
     pygame.init()
 
     pygame.display.set_caption('Bomberman')
@@ -170,5 +170,5 @@ def menu_loop():
 
 
 if __name__ == "__main__":
-    menu_loop()
+    main()
 

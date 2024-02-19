@@ -97,6 +97,8 @@ class Player:
         sin_a = math.sin(self.angle)
         cos_a = math.cos(self.angle)
 
+        print(keys_accel)
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
             exit()
@@ -124,6 +126,9 @@ class Player:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and not self.shot:
                     self.shot = True
+        if keys_accel == 'S'  and not self.shot:
+            print("HEREEEE")
+            self.shot =  True
 
     def mouse_control(self):
         if pygame.mouse.get_focused():
