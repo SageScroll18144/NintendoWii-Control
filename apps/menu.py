@@ -1,8 +1,12 @@
 import pygame
 import pygame_menu
 import cv2
+import sys
+import os
 
 from doom_app import run_doom
+from doodle_app import run_doodle
+from agario_app import run_agario
 
 # Menu variables
 main_theme = pygame_menu.themes.Theme(
@@ -57,23 +61,26 @@ default_button_config = {
     'font_size': 80, 'padding': (10, 100), 'margin': (0, 10)
 }
 
-def start_tetris():
-    print('tetris')
-
-def start_flappy():
-    print('flappy')
-
-def start_space():
-    print('space')
-
-def start_bomber():
-    print('bomber')
-
-def start_doodle():
-    print('doodle')
-
-def start_agario():
-    print('agario')
+# Menu functions
+def start_game(game: str):
+    if game == 'doodle':
+        run_doodle()
+    elif game == 'agario':
+        run_agario()
+    elif game == 'doom':
+        run_doom()
+    elif game == 'flappy':
+        print('flappy')
+    elif game == 'space':
+        print('space')
+    elif game == 'tetris':
+        print('tetris')
+    elif game == 'bomber':
+        print('bomber')
+    else:
+        print('Game not found')
+    
+    os.execv(sys.executable, ['python'] + sys.argv)
 
 def create_menu(surface: pygame.Surface): 
     menu = pygame_menu.Menu(
@@ -84,34 +91,34 @@ def create_menu(surface: pygame.Surface):
     ## Column 1
     menu.add.vertical_margin(10)
     menu.add.button(
-        '1', start_doodle, background_color=base_images['doodle'],
+        '1',lambda: start_game('doodle'), background_color=base_images['doodle'],
         **default_button_config
     )
     menu.add.button(
-        '2', start_bomber, background_color=base_images['bomber'],
+        '2',lambda: start_game('bomber'), background_color=base_images['bomber'],
         **default_button_config
     )
     menu.add.button(
-        '3', start_agario, background_color=base_images['agario'],
+        '3',lambda: start_game('agario'), background_color=base_images['agario'],
         **default_button_config
     )
     menu.add.button(
-        '4', run_doom, background_color=base_images['doom'],
+        '4',lambda: start_game('doom'), background_color=base_images['doom'],
         **default_button_config
     )
 
     ## Column 2
     menu.add.vertical_fill()
     menu.add.button(
-        '5', start_flappy, background_color=base_images['flappy'],
+        '5',lambda: start_game('flappy'), background_color=base_images['flappy'],
         **default_button_config
     )
     menu.add.button(
-        '6', start_tetris, background_color=base_images['tetris'],
+        '6',lambda: start_game('tetris'), background_color=base_images['tetris'],
         **default_button_config
     )
     menu.add.button(
-        '7', start_space, background_color=base_images['space'],
+        '7',lambda: start_game('space'), background_color=base_images['space'],
         **default_button_config
     )
     menu.add.button('Fechar', pygame_menu.events.EXIT)
