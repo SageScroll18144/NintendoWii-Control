@@ -2,6 +2,8 @@ import pygame
 import pygame_menu
 import cv2
 
+from doom_app import run_doom
+
 def run_menu():
     pygame.init()
     surface = pygame.display.set_mode((600, 400))
@@ -25,11 +27,8 @@ def start_doodle():
 def start_agario():
     print('agario')
 
-def start_doom():
-    print('doom')
-
 def run_intro():
-    video = cv2.VideoCapture("video/boot.mp4")
+    video = cv2.VideoCapture("./video/intro.mp4")
     success, video_image = video.read()
     fps = video.get(cv2.CAP_PROP_FPS)
 
@@ -73,7 +72,7 @@ def create_menu(surface: pygame.Surface):
         **default_button_config
     )
     menu.add.button(
-        '4', start_doom, background_color=base_images['doom'],
+        '4', run_doom, background_color=base_images['doom'],
         **default_button_config
     )
 
@@ -84,7 +83,7 @@ def create_menu(surface: pygame.Surface):
         **default_button_config
     )
     menu.add.button(
-        '6', start_flappy, background_color=base_images['tetris'],
+        '6', start_tetris, background_color=base_images['tetris'],
         **default_button_config
     )
     menu.add.button(
@@ -149,4 +148,5 @@ default_button_config = {
 }
 
 if __name__ == "_main_":
+    print('arrocha')
     run_menu()
