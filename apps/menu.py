@@ -1,82 +1,152 @@
 import pygame
 import pygame_menu
+import cv2
 
-pygame.init()
-surface = pygame.display.set_mode((600, 400))
-
+def run_menu():
+    pygame.init()
+    surface = pygame.display.set_mode((600, 400))
+    create_menu(surface)
 
 def start_tetris():
-    # Do the job here !
-    pass
+    print('tetris')
+
 def start_flappy():
-    # Do the job here !
-    pass
+    print('flappy')
+
 def start_space():
-    # Do the job here !
-    pass
+    print('space')
+
 def start_bomber():
-    # Do the job here !
-    pass
+    print('bomber')
+
 def start_doodle():
-    # Do the job here !
-    pass
+    print('doodle')
+
 def start_agario():
-    # Do the job here !
-    pass
-  
+    print('agario')
 
-meu_tema = pygame_menu.themes.Theme(
-    background_color= 	(18,52,86),  # cor de fundo
-    title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_SIMPLE,  # estilo da barra de título
+def start_doom():
+    print('doom')
+
+def run_intro():
+    video = cv2.VideoCapture("video/boot.mp4")
+    success, video_image = video.read()
+    fps = video.get(cv2.CAP_PROP_FPS)
+
+    window = pygame.display.set_mode(video_image.shape[1::-1])
+    clock = pygame.time.Clock()
+
+    run = success
+    while run:
+        clock.tick(fps)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        
+        success, video_image = video.read()
+        if success:
+            video_surf = pygame.image.frombuffer(
+                video_image.tobytes(), video_image.shape[1::-1], "BGR")
+        else:
+            run = False
+        window.blit(video_surf, (0, 0))
+        pygame.display.flip()
+
+def create_menu(surface: pygame.Surface): 
+    menu = pygame_menu.Menu(
+        '                    ARCADE GAMES',
+        600, 400, theme=main_theme, columns=2, rows=5
+    )
+
+    ## Column 1
+    menu.add.vertical_margin(10)
+    menu.add.button(
+        '1', start_doodle, background_color=base_images['doodle'],
+        **default_button_config
+    )
+    menu.add.button(
+        '2', start_bomber, background_color=base_images['bomber'],
+        **default_button_config
+    )
+    menu.add.button(
+        '3', start_agario, background_color=base_images['agario'],
+        **default_button_config
+    )
+    menu.add.button(
+        '4', start_doom, background_color=base_images['doom'],
+        **default_button_config
+    )
+
+    ## Column 2
+    menu.add.vertical_fill()
+    menu.add.button(
+        '5', start_flappy, background_color=base_images['flappy'],
+        **default_button_config
+    )
+    menu.add.button(
+        '6', start_flappy, background_color=base_images['tetris'],
+        **default_button_config
+    )
+    menu.add.button(
+        '7', start_space, background_color=base_images['space'],
+        **default_button_config
+    )
+    menu.add.button('Fechar', pygame_menu.events.EXIT)
+    #Run the menu
+    menu.mainloop(surface)
+
+# Menu variables
+main_theme = pygame_menu.themes.Theme(
+    background_color= 	(18,52,86),
+    title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_SIMPLE,
     title_background_color='white',
-    title_font=pygame_menu.font.FONT_FRANCHISE,  # fonte do título
-    title_font_size=60,  # tamanho da fonte do título
-    title_font_color='black',  # cor da fonte do título
-    widget_font=pygame_menu.font.FONT_FRANCHISE,  # fonte dos widgets
-    widget_font_size=40,  # tamanho da fonte dos widgets
-    widget_font_color='black',  # cor da fonte dos widgets
-    widget_alignment=pygame_menu.locals.ALIGN_CENTER,  # alinhamento dos widgets
-    widget_margin=(0, 20),  # margem dos widgets
-    
+    title_font=pygame_menu.font.FONT_FRANCHISE,
+    title_font_size=60,
+    title_font_color='black',
+    widget_font=pygame_menu.font.FONT_FRANCHISE,
+    widget_font_size=40,
+    widget_font_color='black',
+    widget_alignment=pygame_menu.locals.ALIGN_CENTER,
+    widget_margin=(0, 20),
 )
 
+images_url = {
+    'doodle': './images/DDtitle.png',
+    'agario': './images/agario.jpg',
+    'flappy': './images/flappybird.jpg',
+    'bomber': './images/bomberman.jpg',
+    'space': './images/SpaceInvaders.png',
+    'tetris': './images/tetris.jpg',
+    'doom': './images/doom.jpg'
+}
 
-Dudu_Image = pygame_menu.baseimage.BaseImage(
-image_path='./images/DDtitle.png',
-)
-Agario_Image = pygame_menu.baseimage.BaseImage(
-image_path='./images/agario.jpg',
-)
-Flappy_Image = pygame_menu.baseimage.BaseImage(
-image_path='./images/flappybird.jpg',
-)
-Bomber_Image = pygame_menu.baseimage.BaseImage(
-image_path='./images/bomberman.jpg',
-)
-Space_Image = pygame_menu.baseimage.BaseImage(
-image_path='./images/SpaceInvaders.png',
-)
-Tetris_Image = pygame_menu.baseimage.BaseImage(
-image_path='./images/tetris.jpg',
-)
+base_images = {
+    'doodle': pygame_menu.baseimage.BaseImage(
+        image_path=images_url['doodle'],
+    ),
+    'agario': pygame_menu.baseimage.BaseImage(
+        image_path=images_url['agario'],
+    ),
+    'flappy': pygame_menu.baseimage.BaseImage(
+        image_path=images_url['flappy'],
+    ),
+    'bomber': pygame_menu.baseimage.BaseImage(
+        image_path=images_url['bomber'],
+    ),
+    'space': pygame_menu.baseimage.BaseImage(
+        image_path=images_url['space'],
+    ),
+    'tetris': pygame_menu.baseimage.BaseImage(
+        image_path=images_url['tetris'],
+    ),
+    'doom': pygame_menu.baseimage.BaseImage(
+        image_path=images_url['doom'],
+    ),
+}
 
+default_button_config = {
+    'font_size': 80, 'padding': (10, 100), 'margin': (0, 10)
+}
 
-menu = pygame_menu.Menu('                    ARCADE GAMES', 600, 400,
-             theme= meu_tema, columns=2, rows=5)
-
-default_button_config = {'font_size': 80, 'padding': (10, 100), 'margin': (0, 10)}
-## Column 1
-menu.add.vertical_margin(10)
-menu.add.button('', start_doodle(), background_color=Dudu_Image, **default_button_config)
-menu.add.button('', start_bomber(), background_color=Bomber_Image, **default_button_config)
-menu.add.button('', start_agario(),  background_color=Agario_Image, **default_button_config)
-menu.add.vertical_fill()
-
-## Column 2
-menu.add.vertical_fill()
-menu.add.button('', start_flappy(), background_color=Flappy_Image, **default_button_config)
-menu.add.button('', start_flappy(), background_color=Tetris_Image, **default_button_config)
-menu.add.button('', start_space(), background_color=Space_Image, **default_button_config)
-menu.add.button('Fechar', pygame_menu.events.EXIT)
-#Run the menu
-menu.mainloop(surface)
+if __name__ == "_main_":
+    run_menu()
