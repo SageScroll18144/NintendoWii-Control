@@ -7,6 +7,10 @@ import os
 from doom_app import run_doom
 from doodle_app import run_doodle
 from agario_app import run_agario
+from matris_app import run_matris
+from flappy_app import run_flappy
+from bomberman_app import run_bomberman
+from space_invaders_app import run_space_invaders
 
 # Menu variables
 main_theme = pygame_menu.themes.Theme(
@@ -70,13 +74,13 @@ def start_game(game: str):
     elif game == 'doom':
         run_doom()
     elif game == 'flappy':
-        print('flappy')
+        run_flappy()
     elif game == 'space':
-        print('space')
+        run_space_invaders()
     elif game == 'tetris':
-        print('tetris')
+        run_matris()
     elif game == 'bomber':
-        print('bomber')
+        run_bomberman()
     else:
         print('Game not found')
     
