@@ -12,7 +12,7 @@ esp_now_peer_info_t peerInfo;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("ALO");
+
   Serial.println(WiFi.macAddress());
   if(MODE){
     buildAccelerometer();
