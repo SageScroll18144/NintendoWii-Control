@@ -5,5 +5,5 @@ void buildTrigger(void){
     pinMode(PIN_TRIGGER, INPUT_PULLUP);
 }
 bool readTrigger(void){
-    return !digitalRead(PIN_TRIGGER);
+    return digitalRead(PIN_TRIGGER);
 }
