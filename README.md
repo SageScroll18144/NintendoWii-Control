@@ -1,11 +1,17 @@
 # NintendoWii-Control
 This project runs a Python application on a DE2i-150 FPGA.
 
-The python application simulates a Playstation 2 interface and runs some classic games with a Nintendo Wii controller.
+The python application simulates a Playstation 2 interface and runs some classic games with with a own develop Nintendo Wii controller.
 
-## 🚀 How to run the project
+## Content
 
-## 👥 Group
+- [Apps Docs](apps/)
+- [FPU Docs](FPU/)
+- [Nintendo Wii Control Docs](control/)
+
+## How to run the project
+
+## Group
 
 - [Felipe Santos (ffss)](https://github.com/SageScroll18144)
 - [José Daniel (jdsc2)](https://github.com/JDaniielC)
