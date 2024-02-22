@@ -1,6 +1,12 @@
 #ifndef DEVICE_STATE_H
 #define DEVICE_STATE_H
 
+#define TYPE_SERIAL_SENDER 1
+
+#define DEBUG_SERIAL 0
+#define SENDER_SERIAL_CHAR 1
+#define SENDER_SERIAL_STRUCT 2
+
 typedef struct{
     float angle_width, angle_height;
     char direction;

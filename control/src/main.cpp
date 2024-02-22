@@ -5,20 +5,20 @@
 #include "device_state.h"
 #include "trigger_gun.h"
 
-#define MODE 0 //0 -> Board  | 1 -> Control | 2 -> Debug
-#define TRIGGER_PIN 32
+#define MODE 1 //0 -> Board  | 1 -> Control | 2 -> Debug
+
 uint8_t broadcastAddress[] = {0x08, 0x3A, 0xF2, 0x8F, 0xAD, 0x24};
 esp_now_peer_info_t peerInfo;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("ALO");
+
   Serial.println(WiFi.macAddress());
   if(MODE){
     buildAccelerometer();
     buildTrigger();
   }
-  pinMode(TRIGGER_PIN, INPUT_PULLUP);
+
   WiFi.mode(WIFI_STA);
   // Init ESP-NOW
   if (esp_now_init() != ESP_OK) {
@@ -50,7 +50,7 @@ void loop() {
     state.shot = readTrigger();
     state.angle_width = getAxisY();
     state.angle_height = getAxisZ();
-    state.shot = digitalRead(TRIGGER_PIN);
+    state.shot = readTrigger();
 
     Serial.print("---------------\nDirection read: "); Serial.println(state.direction);
     Serial.print("Angle read: "); Serial.println(state.angle_width);
