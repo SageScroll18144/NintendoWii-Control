@@ -4,12 +4,12 @@ import cv2
 import sys
 import os
 
+from bomberman_app import run_bomberman
 from doom_app import run_doom
 from doodle_app import run_doodle
 from agario_app import run_agario
 from matris_app import run_matris
 from flappy_app import run_flappy
-from bomberman_app import run_bomberman
 from space_invaders_app import run_space_invaders
 
 # Menu variables
