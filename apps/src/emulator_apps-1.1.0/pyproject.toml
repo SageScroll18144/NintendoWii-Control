@@ -1,0 +1,29 @@
+[project]
+name = "emulator_apps"
+requires-python = ">= 3.8"
+version = "1.1.0"
+dependencies = [
+  "pygame",
+  "pygame_menu"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["*app"]
+namespaces = true
+
+[tool.setuptools]
+include-package-data = true
+
+[project.gui-scripts]
+space_invaders_game = "space_invaders_app:run_space_invaders"
+bomberman_game = "bomberman_app:run_bomberman"
+agario_game = "agario_app:run_agario"
+doodle_game = "doodle_app:run_doodle"
+doom_game = "doom_app:run_doom"
+flappy_game = "flappy_app:run_flappy"
+matris_game = "matris_app:run_matris"
+
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"

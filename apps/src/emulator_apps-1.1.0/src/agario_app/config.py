@@ -1,0 +1,11 @@
+import pygame
+
+# Dimension Definitions
+SCREEN_WIDTH, SCREEN_HEIGHT = (1200,800)
+PLATFORM_WIDTH, PLATFORM_HEIGHT = (2000,2000)
+
+# Surface Definitions
+SCOREBOARD_SURFACE = pygame.Surface((95,25),pygame.SRCALPHA)
+LEADERBOARD_SURFACE = pygame.Surface((155,278),pygame.SRCALPHA) 
+SCOREBOARD_SURFACE.fill((50,50,50,80))
+LEADERBOARD_SURFACE.fill((50,50,50,80))

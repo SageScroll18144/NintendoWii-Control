@@ -1,0 +1,1 @@
+from .menu import run_bomberman
