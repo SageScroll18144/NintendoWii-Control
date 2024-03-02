@@ -4,7 +4,8 @@ from ray_casting import mapping
 import math
 import pygame
 from numba import njit
-
+import os
+import sys
 
 @njit(fastmath=True, cache=True)
 def ray_casting_npc_player(npc_x, npc_y, blocked_doors, world_map, player_pos):
@@ -43,7 +44,7 @@ class Interaction:
         self.sprites = sprites
         self.drawing = drawing
         self.pain_sound = pygame.mixer.Sound('sound/pain.wav')
-        self.life = 5000
+        self.life = 50
         self.contadorMortes = 0
         # self.font = pygame.font.SysFont('Arial', 36, bold=True)
         
@@ -105,6 +106,11 @@ class Interaction:
             pygame.mixer.music.play()
             while True:
                 for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        print('restart')
+                        python = sys.executable
+                        os.execl(python, python, * sys.argv)
+
                     if event.type == pygame.QUIT:
                         exit()
                 self.drawing.death()
@@ -117,6 +123,9 @@ class Interaction:
             pygame.mixer.music.play()
             while True:
                 for event in pygame.event.get():
+                    # if event.type == pygame.KEYDOWN:
+                    #     print('restart')
+                    #     self.__init__()
                     if event.type == pygame.QUIT:
                         exit()
                 self.drawing.win()
