@@ -69,6 +69,7 @@ class Drawing:
         render = self.font.render(display_kills, 0, RED)
         self.sc.blit(render, KILLS_POS)
         
+        
     def death(self):  
         render = self.font_loose.render('YOU LOOSE!!!', 1, (randrange(40, 120), 0, 0))
         rect = pygame.Rect(0, 0, 1000, 300)

@@ -98,6 +98,14 @@ class Interaction:
         deleted_objects = self.sprites.list_of_objects[:]
         [self.sprites.list_of_objects.remove(obj) for obj in deleted_objects if obj.delete]
         
+    def restart_game(self):
+    # Redefina as variáveis do jogo para seus valores iniciais
+        self.health_points = 5000
+        self.score = 0
+        self.player_position = (0, 0)
+        self.enemies = []
+        self.game_over = False
+        
     def check_death(self):  
         if self.life <= 0:
             self.pain_sound.play()
