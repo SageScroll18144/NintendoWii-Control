@@ -14,6 +14,7 @@ class Drawing:
         self.clock = clock
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_win = pygame.font.Font('font/font.ttf', 144)
+        self.font_loose = pygame.font.Font('font/font.ttf', 120)
         self.textures = {1: pygame.image.load('img/wall6.png').convert(),
                          2: pygame.image.load('img/wall5.png').convert(),
                          3: pygame.image.load('img/wall3.png').convert(),
@@ -58,7 +59,7 @@ class Drawing:
         render = self.font.render(display_fps, 0, DARKORANGE)
         self.sc.blit(render, FPS_POS)
         
-    def life(self,health_points):
+    def life(self, health_points):
         display_life =  str(health_points//50) + ' ♥'
         render = self.font.render(display_life, 0, RED)
         self.sc.blit(render, LIFE_POS)
@@ -67,6 +68,16 @@ class Drawing:
         display_kills = str(kill_count) + ' ×'
         render = self.font.render(display_kills, 0, RED)
         self.sc.blit(render, KILLS_POS)
+        
+    def death(self):  
+        render = self.font_loose.render('YOU LOOSE!!!', 1, (randrange(40, 120), 0, 0))
+        rect = pygame.Rect(0, 0, 1000, 300)
+        rect.center = HALF_WIDTH, HALF_HEIGHT
+        pygame.draw.rect(self.sc, BLACK, rect, border_radius=50)
+        self.sc.blit(render, (rect.centerx - 430, rect.centery - 140))
+        pygame.display.flip()
+        self.clock.tick(15)
+
 
     def win(self):
         render = self.font_win.render('YOU WIN!!!', 1, (randrange(40, 120), 0, 0))

@@ -43,7 +43,7 @@ class Interaction:
         self.sprites = sprites
         self.drawing = drawing
         self.pain_sound = pygame.mixer.Sound('sound/pain.wav')
-        self.vida = 5000
+        self.life = 5000
         self.contadorMortes = 0
         # self.font = pygame.font.SysFont('Arial', 36, bold=True)
         
@@ -75,10 +75,10 @@ class Interaction:
                                           world_map, self.player.pos):
                     obj.npc_action_trigger = True
                     self.npc_move(obj)
-                    global contadorVida
-                    self.vida -= 1
+                    global contadorlife
+                    self.life -= 1
                     print('Atirou')
-                    print('Vida:', self.vida/50, '%')
+                    print('life:', self.life/50, '%')
                     
                 else:
                     obj.npc_action_trigger = False
@@ -96,6 +96,19 @@ class Interaction:
     def clear_world(self):
         deleted_objects = self.sprites.list_of_objects[:]
         [self.sprites.list_of_objects.remove(obj) for obj in deleted_objects if obj.delete]
+        
+    def check_death(self):  
+        if self.life <= 0:
+            self.pain_sound.play()
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load('sound/win.mp3')
+            pygame.mixer.music.play()
+            while True:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        exit()
+                self.drawing.death()
+            
 
     def check_win(self):
         if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'npc' and not obj.is_dead]):
