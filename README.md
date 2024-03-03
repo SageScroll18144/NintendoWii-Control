@@ -1,5 +1,5 @@
-# NintendoWii-Control
-This project runs a Python application on a DE2i-150 FPGA.
+# IHS Project
+This project runs a Python application on a DE2i-150 FPGA and is part of discipline IF817(Hardware-Software Interface).
 
 The python application simulates a Playstation 2 interface and runs some classic games with with a own develop Nintendo Wii controller.
 
@@ -8,8 +8,58 @@ The python application simulates a Playstation 2 interface and runs some classic
 - [Apps Docs](apps/)
 - [FPU Docs](FPU/)
 - [Nintendo Wii Control Docs](control/)
+- [DE2i-150 FPGA Drive](drive/)
+
+## Project tree
+
+    .
+    ├── FPU
+    │   ├── device_state
+    │   │   └── device_state.h
+    │   ├── interface_app
+    │   │   ├── socket_react.c
+    │   │   └── socket_react.h
+    │   ├── receive_es
+    │   │   └── EStoAPP.py
+    │   ├── run
+    │   │   └── main.c
+    │   ├── serial
+    │   │   └── run.sh
+    │   └── platformio.ini
+    ├── apps
+    │   ├── images
+    │   │   └── *
+    │   ├── src
+    │   │   └── *
+    │   ├── video
+    │   │   └── intro.mp4
+    │   ├── emulator_apps-1.1.0-py3-none-any.whl
+    │   ├── menu.py
+    │   └── requirements.txt
+    ├── control
+    │   ├── include
+    │   │   └── README.md
+    │   ├── lib
+    │   │   └── *
+    │   ├── src
+    │   │   └── main.cpp
+    │   ├── test
+    │   │   └── README.md
+    │   └── platformio.ini
+    ├── driver
+    ├── char
+    │   ├── dummy.c
+    │   └── Makefile
+    └── pci
+        ├── de2i-150.c
+        └── Makefile
+    ├── CODE_OF_CONDUCT.md
+    └── README.md
+
+
 
 ## How to run the project
+
 
 ## Group
 
