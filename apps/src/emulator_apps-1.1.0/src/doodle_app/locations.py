@@ -132,7 +132,7 @@ class GameLocation(Location):
     
     
     def draw(self):
-        self.wirelles_control()
+        self.wireless_control()
         if self.doodle.alive == 1:
             # create monster
             if self.monster == None:
@@ -214,7 +214,7 @@ class GameLocation(Location):
             elif event.key == K_RIGHT:
                 self.doodle.set_x(self.doodle.x + 10)
 
-    def wirelles_control(self):
+    def wireless_control(self):
         keys_accel = 'x'
         try:
             if ser.in_waiting:
