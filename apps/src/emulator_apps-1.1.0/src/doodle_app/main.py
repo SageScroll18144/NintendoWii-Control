@@ -5,7 +5,6 @@ import pygame
 # _view for exe building
 #from pygame import _view
 from pygame.locals import *
-import sys
 
 from .locations import *
 from .sprites import *
@@ -22,13 +21,13 @@ class Game():
         pygame.display.set_caption('Doodle jump')
     def event(self, event):
         if event.type == QUIT:
-            sys.exit()
+            pygame.quit()
         elif event.type == KEYUP:
             if event.key == K_ESCAPE:
                 if isinstance(self.location, GameLocation):
                     self.location = StartLocation(self)
                 elif isinstance(self.location, StartLocation):
-                    sys.exit()
+                    pygame.quit()
                 
 
 # main function
@@ -50,7 +49,6 @@ def run_doodle():
             event = event_
             game.location.event(event)
             game.event(event)     
-            
             
     
 if __name__ == "__main__":

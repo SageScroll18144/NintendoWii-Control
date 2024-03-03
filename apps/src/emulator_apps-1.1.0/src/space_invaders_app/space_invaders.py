@@ -1,6 +1,5 @@
 import math
 import random
-import sys
 
 import pygame
 
@@ -99,7 +98,7 @@ class PySpaceInvaders:
         events = []
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit()
+                pygame.quit()
             events.append(event)
         return events
 

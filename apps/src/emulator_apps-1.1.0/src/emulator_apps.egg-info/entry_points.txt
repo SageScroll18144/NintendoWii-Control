@@ -1,8 +1,0 @@
-[gui_scripts]
-agario_game = agario_app:run_agario
-bomberman_game = bomberman_app:run_bomberman
-doodle_game = doodle_app:run_doodle
-doom_game = doom_app:run_doom
-flappy_game = flappy_app:run_flappy
-matris_game = matris_app:run_matris
-space_invaders_game = space_invaders_app:run_space_invaders

@@ -236,7 +236,7 @@ class Matris(object):
         write_score(self.score)
         
         if full_exit:
-            exit()
+            pygame.quit()
         else:
             raise GameOver("Sucker!")
 
@@ -583,7 +583,7 @@ class Menu(object):
 
             for event in events:
                 if event.type == pygame.QUIT:
-                    exit()
+                    pygame.quit()
 
             menu.update(events, timepassed)
 

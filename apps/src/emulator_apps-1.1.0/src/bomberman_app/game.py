@@ -217,7 +217,6 @@ def main(s, tile_size, show_path, terrain_images, bomb_images, explosion_images,
             pass
 
         if player.life:
-            print(f"device command: {keys_accel}")
             keys = pygame.key.get_pressed()
             temp = player.direction
             movement = False
@@ -261,7 +260,7 @@ def main(s, tile_size, show_path, terrain_images, bomb_images, explosion_images,
 
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
-                sys.exit(0)
+                pygame.quit()
             elif e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_SPACE or keys_accel == 'S':
                     if player.bomb_limit == 0 or not player.life:
@@ -272,8 +271,6 @@ def main(s, tile_size, show_path, terrain_images, bomb_images, explosion_images,
                     player.bomb_limit -= 1
                 elif e.key == pygame.K_ESCAPE:
                     running = False
-        
-        
 
         update_bombs(grid, dt)
 
@@ -312,4 +309,3 @@ def check_end_game():
             return False
 
     return True
-

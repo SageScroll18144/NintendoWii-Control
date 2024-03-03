@@ -57,9 +57,6 @@ def run_agario():
                 blob.moveRight()
             if (keys_accel == 'S'):
                 blob.split()
-
-            print(f"device state: {keys_accel}")
-
             blob.collisionDetection(cells.list)
             cam.update(blob)
             MAIN_SURFACE.fill((242,251,255))

@@ -166,7 +166,7 @@ def run_bomberman():
 
         pygame.display.flip()
 
-    exit()
+    pygame.quit()
 
 
 if __name__ == "__main__":

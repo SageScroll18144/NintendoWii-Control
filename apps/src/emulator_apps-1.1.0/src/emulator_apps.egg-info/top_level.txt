@@ -1,7 +1,0 @@
-agario_app
-bomberman_app
-doodle_app
-doom_app
-flappy_app
-matris_app
-space_invaders_app

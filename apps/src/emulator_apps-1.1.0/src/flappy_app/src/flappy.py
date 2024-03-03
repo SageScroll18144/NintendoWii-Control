@@ -1,5 +1,4 @@
 import asyncio
-import sys
 
 import pygame
 from pygame.locals import K_ESCAPE, K_SPACE, K_UP, KEYDOWN, QUIT
@@ -81,7 +80,6 @@ class Flappy:
             event.type == KEYDOWN and event.key == K_ESCAPE
         ):
             pygame.quit()
-            sys.exit()
 
     def is_tap_event(self, event):
         m_left, _, _ = pygame.mouse.get_pressed()
@@ -110,7 +108,7 @@ class Flappy:
                 if self.is_tap_event(event):
                     self.player.flap()
 
-            if self.wirelles_control() == 'S' :
+            if self.wireless_control() == 'S' :
                 self.player.flap()
 
             self.background.tick()
@@ -148,7 +146,7 @@ class Flappy:
             pygame.display.update()
             await asyncio.sleep(0)
 
-    def wirelles_control(self):
+    def wireless_control(self):
         keys_accel = 'x'
         try:
             if ser.in_waiting:
@@ -159,3 +157,4 @@ class Flappy:
             pass
 
         return keys_accel
+

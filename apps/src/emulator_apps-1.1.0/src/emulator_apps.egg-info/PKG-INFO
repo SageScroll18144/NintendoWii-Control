@@ -1,6 +1,0 @@
-Metadata-Version: 2.1
-Name: emulator_apps
-Version: 1.1.0
-Requires-Python: >=3.8
-Requires-Dist: pygame
-Requires-Dist: pygame_menu

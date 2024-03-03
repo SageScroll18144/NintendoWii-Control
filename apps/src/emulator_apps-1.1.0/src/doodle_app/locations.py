@@ -3,7 +3,6 @@
 import pygame
 from pygame.locals import *
 from .sprites import Doodle, Platform, MovingPlatform, CrashingPlatform, Rectangle, Button, TextSprite, Spring, Monster
-import sys
 from random import randint
 
 from .config import *
@@ -72,7 +71,7 @@ class StartLocation(Location):
                 if name:
                     self.parent.location = GameLocation(self.parent, name)
             elif self.exitbtn.rect.collidepoint(pygame.mouse.get_pos()):
-                sys.exit()
+                pygame.quit()
     
     def showInput(self):
         self.input_surf = Rectangle(300, 100, (0,191,255,200))
@@ -235,3 +234,4 @@ class ExitLocation(Location):
     def __init__(self, parent, name, score):
         Location.__init__(self, parent)
         self.background = pygame.image.load('./img/background.png')
+
