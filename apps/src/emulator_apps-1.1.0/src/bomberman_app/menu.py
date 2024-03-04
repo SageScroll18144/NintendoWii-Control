@@ -103,8 +103,7 @@ def run_bomberman():
     play_options.add.selector("Show path", [("Yes", True), ("No", False)], onchange=change_path)
 
     play_options.add.button('Back', pygame_menu.events.BACK)
-    play_menu.add.button('Start',
-                         run_game)
+    play_menu.add.button('Start', run_game)
 
     play_menu.add.button('Options', play_options)
     play_menu.add.button('Return  to  main  menu', pygame_menu.events.BACK)
@@ -141,13 +140,13 @@ def run_bomberman():
         theme=menu_theme,
         height=int(WINDOW_SIZE[1] * WINDOW_SCALE),
         width=int(WINDOW_SIZE[0] * WINDOW_SCALE),
-        onclose=pygame_menu.events.EXIT,
+        onclose=pygame_menu.events.BACK,
         title='Main menu'
     )
 
     main_menu.add.button('Play', play_menu)
     main_menu.add.button('About', about_menu)
-    main_menu.add.button('Quit', pygame_menu.events.EXIT)
+    main_menu.add.button('Quit', main_menu.disable)
 
     running = True
     while running:
@@ -163,10 +162,12 @@ def run_bomberman():
 
         if main_menu.is_enabled():
             main_menu.mainloop(surface, main_background)
+        else:
+            running = False
 
         pygame.display.flip()
 
-    pygame.quit()
+    pygame_menu.events.BACK
 
 
 if __name__ == "__main__":

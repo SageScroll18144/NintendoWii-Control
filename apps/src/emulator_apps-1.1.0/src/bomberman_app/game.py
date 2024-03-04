@@ -1,6 +1,6 @@
 import pygame
-import sys
 import random
+import pygame_menu
 
 from .enums.power_up_type import PowerUpType
 from .player import Player
@@ -260,7 +260,7 @@ def main(s, tile_size, show_path, terrain_images, bomb_images, explosion_images,
 
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
-                pygame.quit()
+                pygame_menu.events.BACK
             elif e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_SPACE or keys_accel == 'S':
                     if player.bomb_limit == 0 or not player.life:
