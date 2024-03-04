@@ -24,19 +24,20 @@ def run_agario():
 
     # Game main loop
     try:
-        while(True):
+        running = True
+        while(running):
             clock.tick(70)
             for e in pygame.event.get():
                 if(e.type == pygame.KEYDOWN):
                     if(e.key == pygame.K_ESCAPE):
-                        pygame.quit()
+                        running = False
                         break
                     if(e.key == pygame.K_SPACE):
                         blob.split()
                     if(e.key == pygame.K_w):
                         blob.feed()
                 if(e.type == pygame.QUIT):
-                    pygame.quit()
+                    running = False
                     break
             
             keys_accel = 'F'
