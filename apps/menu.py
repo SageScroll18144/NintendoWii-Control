@@ -1,8 +1,6 @@
 import pygame
 import pygame_menu
 import cv2
-import sys
-import os
 
 from bomberman_app import run_bomberman
 from doom_app import run_doom
@@ -84,16 +82,16 @@ def start_game(game: str):
     else:
         print('Game not found')
     
-    os.execv(sys.executable, ['python'] + sys.argv)
+    pygame.display.set_mode((600, 500))
 
 def create_menu(surface: pygame.Surface): 
     menu = pygame_menu.Menu(
         '                    ARCADE GAMES',
-        600, 400, theme=main_theme, columns=2, rows=5
+        600, 500, theme=main_theme, columns=2, rows=5
     )
 
     ## Column 1
-    menu.add.vertical_margin(10)
+    menu.add.vertical_margin(5)
     menu.add.button(
         '1',lambda: start_game('doodle'), background_color=base_images['doodle'],
         **default_button_config
@@ -112,7 +110,7 @@ def create_menu(surface: pygame.Surface):
     )
 
     ## Column 2
-    menu.add.vertical_fill()
+    menu.add.vertical_margin(5)
     menu.add.button(
         '5',lambda: start_game('flappy'), background_color=base_images['flappy'],
         **default_button_config
@@ -155,5 +153,5 @@ def run_intro():
 
 run_intro()
 pygame.init()
-surface = pygame.display.set_mode((600, 400))
+surface = pygame.display.set_mode((600, 500))
 create_menu(surface)
