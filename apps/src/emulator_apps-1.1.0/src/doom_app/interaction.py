@@ -4,7 +4,7 @@ from .ray_casting import mapping
 import math
 import pygame
 from numba import njit
-
+import sys
 import os
 base_path = os.path.dirname(__file__)
 
@@ -47,6 +47,8 @@ class Interaction:
         self.pain_sound = pygame.mixer.Sound(
             os.path.join(base_path, 'sound/pain.wav')
         )
+        self.life = 5000
+        self.contadorMortes = 0
 
     def interaction_objects(self):
         if self.player.shot and self.drawing.shot_animation_trigger:
@@ -57,6 +59,7 @@ class Interaction:
                                                   self.sprites.blocked_doors,
                                                   world_map, self.player.pos):
                             if obj.flag == 'npc':
+                                self.contadorMortes += 1
                                 self.pain_sound.play()
                             obj.is_dead = True
                             obj.blocked = None
@@ -74,6 +77,8 @@ class Interaction:
                                           world_map, self.player.pos):
                     obj.npc_action_trigger = True
                     self.npc_move(obj)
+                    global contadorlife
+                    self.life -= 1
                 else:
                     obj.npc_action_trigger = False
 
@@ -88,6 +93,23 @@ class Interaction:
         deleted_objects = self.sprites.list_of_objects[:]
         [self.sprites.list_of_objects.remove(obj) for obj in deleted_objects if obj.delete]
 
+    def check_death(self):  
+        if self.life <= 0:
+            self.pain_sound.play()
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load(
+                os.path.join(base_path, 'sound/win.mp3')
+            )
+            pygame.mixer.music.play()
+            while True:
+                for event in pygame.event.get():
+                    if (event.type == pygame.QUIT
+                        or (event.type == pygame.KEYDOWN
+                        and event.key == pygame.K_ESCAPE)):
+                        return True
+                self.drawing.death()
+        return False
+
     def check_win(self):
         if not len([obj for obj in self.sprites.list_of_objects if obj.flag == 'npc' and not obj.is_dead]):
             pygame.mixer.music.stop()
@@ -97,9 +119,12 @@ class Interaction:
             pygame.mixer.music.play()
             while True:
                 for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
+                    if (event.type == pygame.QUIT
+                        or (event.type == pygame.KEYDOWN
+                        and event.key == pygame.K_ESCAPE)):
+                        return True
                 self.drawing.win()
+        return False
 
     def play_music(self):
         pygame.mixer.pre_init(44100, -16, 2, 2048)
