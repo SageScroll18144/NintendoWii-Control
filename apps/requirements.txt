@@ -3,3 +3,4 @@ opencv-python
 pygame
 pygame_menu
 numba
+pyserial
