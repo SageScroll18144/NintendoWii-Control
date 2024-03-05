@@ -5,7 +5,7 @@ The python application simulates a Playstation 2 interface and runs some classic
 
 ## Content
 
-- [Apps Docs](apps/)
+- [Apps Docs](apps/README.md)
 - [FPU Docs](FPU/)
 - [Nintendo Wii Control Docs](control/)
 - [DE2i-150 FPGA Drive](drive/)
@@ -33,6 +33,7 @@ The python application simulates a Playstation 2 interface and runs some classic
     │   │   └── *
     │   ├── video
     │   │   └── intro.mp4
+    │   ├── README.md
     │   ├── emulator_apps-1.1.0-py3-none-any.whl
     │   ├── menu.py
     │   └── requirements.txt
