@@ -90,6 +90,7 @@ class RWEmbCompFuncs:
         for i in range(0, 2):
             ioctl(self.fd, WR_R_DISPLAY)
             retval = os.write(self.fd, data.to_bytes(4, 'little'))
+            t.sleep(0.1)
 
     @check_active
     def seven_segment_l(self, num):
@@ -98,6 +99,7 @@ class RWEmbCompFuncs:
         for i in range(0, 2):
             ioctl(self.fd, WR_L_DISPLAY)
             retval = os.write(self.fd, data.to_bytes(4, 'little'))
+            t.sleep(0.1)
 
     @check_active
     def red_leds(self, number):
