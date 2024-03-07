@@ -1,5 +1,11 @@
 import os
-from fcntl import ioctl
+
+active = False
+try:
+    from fcntl import ioctl
+    active = True
+except ImportError:
+    print("This module is not supported on this platform")
 
 RD_SWITCHES = 24929
 RD_PBUTTONS = 24930
@@ -22,24 +28,37 @@ SEVEN_SEGMENT_OPTIONS = {
     "OFF": 0b11111111
 }
 
+def check_active(func):
+    def wrapper(self, *args, **kwargs):
+        if not self.active:
+            print("The device is not active.")
+            return
+        return func(self, *args, **kwargs)
+    return wrapper
+
 class RWEmbCompFuncs:
     def __init__(self):
-        self.fd = os.open('/dev/mydev', os.O_RDWR)
+        self.active = active
         self.buttons = {
             '0b111': "A", # 7
             '0b1001': "B", # 9
             '0b1010': "C", # 10
             '0b1011': "D", # 11
-            '0b1100': "E" # 12
+            '0b1100': "E", # 12
             '0b1101': "F", # 13
             '0b1110': "G", # 14
-            '0b1111': "H", # 15
+            '0b1111': "H" # 15
         }
+        try:
+            self.fd = os.open('/dev/mydev', os.O_RDWR)
+        except:
+            self.active = False
+            print("Could not open /dev/mydev")
 
     def __del__(self):
         os.close(self.fd)
 
-    def seven_segment_encoder(self, num):
+    def _seven_segment_encoder(self, num):
         display = 0
         num_digits = 0
 
@@ -57,12 +76,14 @@ class RWEmbCompFuncs:
 
         return display
 
+    @check_active
     def seven_segment(self, num, display):
-        data = seven_segment_encoder(num)
+        data = _seven_segment_encoder(num)
         
         ioctl(self.fd, display)
         retval = os.write(self.fd, data.to_bytes(4, 'little'))
 
+    @check_active
     def red_leds(self, j):
         data = 0b111111111111111111
 
@@ -72,6 +93,7 @@ class RWEmbCompFuncs:
         ioctl(self.fd, WR_RED_LEDS)
         os.write(self.fd, data.to_bytes(4,'little'))
 
+    @check_active
     def green_leds(self, j):
         data = 0b11111111
 
@@ -81,6 +103,7 @@ class RWEmbCompFuncs:
         ioctl(self.fd, WR_GREEN_LEDS)
         os.write(self.fd, data.to_bytes(4,'little'))
 
+    @check_active
     def read_button(self):
         ioctl(self.fd, RD_PBUTTONS)
         button = os.read(self.fd, 4)
@@ -88,6 +111,7 @@ class RWEmbCompFuncs:
 
         return button
 
+    @check_active
     def read_switches(self):
         ioctl(self.fd, RD_SWITCHES)
         switches = os.read(self.fd, 4)
