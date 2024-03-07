@@ -100,7 +100,7 @@ class RWEmbCompFuncs:
     @check_active
     def red_leds(self, number):
         data = self._number_to_binary(number)
-        for i in range(0, 1):
+        for i in range(0, 2):
             ioctl(self.fd, WR_RED_LEDS)
             os.write(self.fd, data.to_bytes(4,'little'))
             t.sleep(0.1)
@@ -109,7 +109,7 @@ class RWEmbCompFuncs:
     @check_active
     def green_leds(self, number):
         data = self._number_to_binary(number)
-        for i in range(0, 1):
+        for i in range(0, 2):
             ioctl(self.fd, WR_GREEN_LEDS)
             os.write(self.fd, data.to_bytes(4,'little'))
             t.sleep(0.1)
