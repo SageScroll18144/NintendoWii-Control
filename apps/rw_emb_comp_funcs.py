@@ -22,69 +22,75 @@ SEVEN_SEGMENT_OPTIONS = {
     "OFF": 0b11111111
 }
 
-BUTTONS_OPTIONS = {
-    '0b111': "A", # 7
-    '0b1001': "B", # 9
-    '0b1010': "C", # 10
-    '0b1011': "D", # 11
-    '0b1100': "E" # 12
-    '0b1101': "F", # 13
-    '0b1110': "G", # 14
-    '0b1111': "H", # 15
-}
+class RWEmbCompFuncs:
+    def __init__(self):
+        self.fd = os.open('/dev/mydev', os.O_RDWR)
+        self.buttons = {
+            '0b111': "A", # 7
+            '0b1001': "B", # 9
+            '0b1010': "C", # 10
+            '0b1011': "D", # 11
+            '0b1100': "E" # 12
+            '0b1101': "F", # 13
+            '0b1110': "G", # 14
+            '0b1111': "H", # 15
+        }
 
-def seven_segment_encoder(num):
-    display = 0
-    num_digits = 0
+    def __del__(self):
+        os.close(self.fd)
 
-    while True:
-        digit = num % 10
-        display |= (SEVEN_SEGMENT_OPTIONS[digit] << 8 * num_digits)
-        num_digits += 1
-        num = num // 10
+    def seven_segment_encoder(self, num):
+        display = 0
+        num_digits = 0
+
+        while True:
+            digit = num % 10
+            display |= (SEVEN_SEGMENT_OPTIONS[digit] << 8 * num_digits)
+            num_digits += 1
+            num = num // 10
+            
+            if num == 0:
+                break
+
+        for i in range (num_digits, num_digits + (4 - num_digits)):
+            display |= (SEVEN_SEGMENT_OPTIONS["OFF"] << 8 * i)
+
+        return display
+
+    def seven_segment(self, num, display):
+        data = seven_segment_encoder(num)
         
-        if num == 0:
-            break
+        ioctl(self.fd, display)
+        retval = os.write(self.fd, data.to_bytes(4, 'little'))
 
-    for i in range (num_digits, num_digits + (4 - num_digits)):
-        display |= (SEVEN_SEGMENT_OPTIONS["OFF"] << 8 * i)
+    def red_leds(self, j):
+        data = 0b111111111111111111
 
-    return display
+        for i in range(0, j):
+            data >>= 1
+        
+        ioctl(self.fd, WR_RED_LEDS)
+        os.write(self.fd, data.to_bytes(4,'little'))
 
-def seven_segment(fd, num, display, show_output_msg):
-    data = seven_segment_encoder(num)
-    
-    ioctl(fd, display)
-    retval = os.write(fd, data.to_bytes(4, 'little'))
+    def green_leds(self, j):
+        data = 0b11111111
 
-def red_leds(fd, j):
-    data = 0b111111111111111111
+        for i in range(0, j):
+            data >>= 1
+        
+        ioctl(self.fd, WR_GREEN_LEDS)
+        os.write(self.fd, data.to_bytes(4,'little'))
 
-    for i in range(0, j):
-        data >>= 1
-    
-    ioctl(fd, WR_RED_LEDS)
-    os.write(fd, data.to_bytes(4,'little'))
+    def read_button(self):
+        ioctl(self.fd, RD_PBUTTONS)
+        button = os.read(self.fd, 4)
+        button = bin(int.from_bytes(button, 'little'))
 
-def green_leds(fd, j):
-    data = 0b11111111
+        return button
 
-    for i in range(0, j):
-        data >>= 1
-    
-    ioctl(fd, WR_GREEN_LEDS)
-    os.write(fd, data.to_bytes(4,'little'))
+    def read_switches(self):
+        ioctl(self.fd, RD_SWITCHES)
+        switches = os.read(self.fd, 4)
+        switches = bin(int.from_bytes(switches, 'little'))  
 
-def read_button(fd, show_output_msg):
-    ioctl(fd, RD_PBUTTONS)
-    button = os.read(fd, 4)
-    button = bin(int.from_bytes(button, 'little'))
-
-    return button
-
-def read_switches(fd, show_output_msg):
-    ioctl(fd, RD_SWITCHES)
-    switches = os.read(fd, 4)
-    switches = bin(int.from_bytes(switches, 'little'))  
-
-    return switches
+        return switches
