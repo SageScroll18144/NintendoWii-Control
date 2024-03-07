@@ -3,7 +3,7 @@ import pygame_menu
 import cv2
 
 from bomberman_app import run_bomberman
-from src.doom_app import run_doom
+from doom_app import run_doom
 from doodle_app import run_doodle
 from agario_app import run_agario
 from matris_app import run_matris
