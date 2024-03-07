@@ -88,20 +88,23 @@ class RWEmbCompFuncs:
         data = 0b111111111111111111
 
         for i in range(0, j):
+            ioctl(self.fd, WR_RED_LEDS)
+            os.write(self.fd, data.to_bytes(4,'little'))
             data >>= 1
         
-        ioctl(self.fd, WR_RED_LEDS)
-        os.write(self.fd, data.to_bytes(4,'little'))
 
     @check_active
-    def green_leds(self, j):
+    def green_leds(self, j, remove = False):
         data = 0b11111111
 
+        if remove:
+            data = 0b00000000
+
         for i in range(0, j):
+            ioctl(self.fd, WR_GREEN_LEDS)
+            os.write(self.fd, data.to_bytes(4,'little'))
             data >>= 1
         
-        ioctl(self.fd, WR_GREEN_LEDS)
-        os.write(self.fd, data.to_bytes(4,'little'))
 
     @check_active
     def read_button(self):

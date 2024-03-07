@@ -68,21 +68,31 @@ class Menu:
     def __init__(self):
         self.surface = pygame.display.set_mode((600, 500))
         self.create_menu()
+        self.games_started_count = 0
 
     def start_game(self, game: str):
+        self.games_started_count += 1
+        RW.green_leds(self.games_started_count, remove=True)
         if game == 'doodle':
+            RW.red_leds(15)
             run_doodle()
         elif game == 'agario':
+            RW.red_leds(1)
             run_agario()
         elif game == 'doom':
+            RW.red_leds(3)
             run_doom()
         elif game == 'flappy':
+            RW.red_leds(7)
             run_flappy()
         elif game == 'space':
+            RW.red_leds(5)
             run_space_invaders()
         elif game == 'tetris':
+            RW.red_leds(4)
             run_matris()
         elif game == 'bomber':
+            RW.red_leds(2)
             run_bomberman()
         else:
             print('Game not found')
@@ -129,13 +139,14 @@ class Menu:
             **default_button_config
         )
         menu.add.button('Fechar', pygame_menu.events.EXIT)
+
+        RW.green_leds(7)
         #Run the menu
         menu.mainloop(self.surface) 
 
 if __name__ == '__main__':
     pygame.init()
     RW = RWEmbCompFuncs()
-
     menu = Menu()
     pygame.quit()
     quit()
