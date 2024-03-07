@@ -175,21 +175,21 @@ class Spaceship:
 
                 if event.key == pygame.K_SPACE:
                     self.is_firing = False
-        
-        
-        if keys_accel == 'L':
-            self.moving_direction = MovingDirection.LEFT
 
-        if keys_accel == 'R':
-            self.moving_direction = MovingDirection.RIGHT
-        
-        if keys_accel == 'F':
-            self.moving_direction = MovingDirection.IDLE
+        if keys_accel != 'x':
+            if keys_accel == 'L':
+                self.moving_direction = MovingDirection.LEFT
 
-        if keys_accel == 'S':
-            self.is_firing = True
-        else: 
-            self.is_firing = False
+            if keys_accel == 'R':
+                self.moving_direction = MovingDirection.RIGHT
+            
+            if keys_accel == 'F':
+                self.moving_direction = MovingDirection.IDLE
+
+            if keys_accel == 'S':
+                self.is_firing = True
+            else: 
+                self.is_firing = False
 
     
     def _move(self, dt):

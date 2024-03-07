@@ -17,6 +17,9 @@ class Drawing:
         self.font_win = pygame.font.Font(
             os.path.join(base_path, 'font/font.ttf'), 144
         )
+        self.font_loose = pygame.font.Font(
+            os.path.join(base_path, 'font/font.ttf'), 120
+        )
         self.textures = {
             1: pygame.image.load(os.path.join(
                 base_path, 'img/wall6.png')
@@ -84,6 +87,26 @@ class Drawing:
         display_fps = str(int(clock.get_fps()))
         render = self.font.render(display_fps, 0, DARKORANGE)
         self.sc.blit(render, FPS_POS)
+    
+    def life(self, health_points):
+        display_life =  str(health_points//50) + ' ♥'
+        render = self.font.render(display_life, 0, RED)
+        self.sc.blit(render, LIFE_POS)
+
+    def kills(self, kill_count):
+        display_kills = str(kill_count) + ' ×'
+        render = self.font.render(display_kills, 0, RED)
+        self.sc.blit(render, KILLS_POS)
+
+
+    def death(self):  
+        render = self.font_loose.render('YOU LOOSE!!!', 1, (randrange(40, 120), 0, 0))
+        rect = pygame.Rect(0, 0, 1000, 300)
+        rect.center = HALF_WIDTH, HALF_HEIGHT
+        pygame.draw.rect(self.sc, BLACK, rect, border_radius=50)
+        self.sc.blit(render, (rect.centerx - 430, rect.centery - 140))
+        pygame.display.flip()
+        self.clock.tick(15)
 
     def win(self):
         render = self.font_win.render('YOU WIN!!!', 1, (randrange(40, 120), 0, 0))
@@ -157,7 +180,6 @@ class Drawing:
         while self.menu_trigger:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
                     return True
 
             self.sc.blit(self.menu_picture, (0, 0), (x % WIDTH, HALF_HEIGHT, WIDTH, HEIGHT))
@@ -184,7 +206,6 @@ class Drawing:
                 pygame.draw.rect(self.sc, BLACK, button_exit, border_radius=25)
                 self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
                 if mouse_click[0]:
-                    pygame.quit()
                     return True
             try:
                 pygame.display.flip()

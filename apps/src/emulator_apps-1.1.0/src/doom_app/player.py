@@ -86,7 +86,6 @@ class Player:
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
-            pygame.quit()
             return True
         if keys[pygame.K_w] or keys_accel == 'D':
             dx, dy = player_speed * cos_a, player_speed * sin_a
@@ -108,7 +107,6 @@ class Player:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
                 return True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1 and not self.shot:

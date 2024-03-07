@@ -33,6 +33,7 @@ class Flappy:
         screen = pygame.display.set_mode((window.width, window.height))
         images = Images()
 
+        self.running = True
         self.config = GameConfig(
             screen=screen,
             clock=pygame.time.Clock(),
@@ -43,7 +44,7 @@ class Flappy:
         )
 
     async def start(self):
-        while True:
+        while self.running:
             self.background = Background(self.config)
             self.floor = Floor(self.config)
             self.player = Player(self.config)
@@ -60,7 +61,7 @@ class Flappy:
 
         self.player.set_mode(PlayerMode.SHM)
 
-        while True:
+        while self.running:
             for event in pygame.event.get():
                 self.check_quit_event(event)
                 if self.is_tap_event(event):
@@ -79,7 +80,7 @@ class Flappy:
         if event.type == QUIT or (
             event.type == KEYDOWN and event.key == K_ESCAPE
         ):
-            pygame.quit()
+            self.running = False
 
     def is_tap_event(self, event):
         m_left, _, _ = pygame.mouse.get_pressed()
@@ -95,7 +96,7 @@ class Flappy:
         self.score.reset()
         self.player.set_mode(PlayerMode.NORMAL)
 
-        while True:
+        while self.running:
             if self.player.collided(self.pipes, self.floor):
                 return
 
@@ -128,7 +129,7 @@ class Flappy:
         self.pipes.stop()
         self.floor.stop()
 
-        while True:
+        while self.running:
             for event in pygame.event.get():
                 self.check_quit_event(event)
                 if self.is_tap_event(event):

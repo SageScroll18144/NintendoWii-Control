@@ -38,7 +38,7 @@ class PySpaceInvaders:
 
     def play(self):
         clock = pygame.time.Clock()
-        while True:
+        while self.is_playing:
             dt = clock.tick()
 
             update_count = self._get_update_count(dt)
@@ -93,12 +93,19 @@ class PySpaceInvaders:
         self.update_time_delay = self.update_time_delay % UPDATE_PERIOD_MS
 
         return update_count
+    
+    def _disable_audio(self):
+        pygame.mixer.quit()
 
     def _get_events(self):
         events = []
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
+            if event.type == pygame.QUIT or (
+                event.type == pygame.KEYDOWN and
+                event.key == pygame.K_ESCAPE
+            ):
+                self._disable_audio()
+                self.is_playing = False
             events.append(event)
         return events
 

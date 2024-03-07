@@ -71,7 +71,8 @@ class StartLocation(Location):
                 if name:
                     self.parent.location = GameLocation(self.parent, name)
             elif self.exitbtn.rect.collidepoint(pygame.mouse.get_pos()):
-                pygame.quit()
+                return False
+        return True
     
     def showInput(self):
         self.input_surf = Rectangle(300, 100, (0,191,255,200))
