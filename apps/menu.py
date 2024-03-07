@@ -68,16 +68,19 @@ total_tickets = 7
 
 class Menu:
     def __init__(self):
-        self.games_started_count = 0
+        self.games_started_count = total_tickets
         self.surface = pygame.display.set_mode((600, 500))
         self.create_menu()
 
     def start_game(self, game: str):
-        if (self.games_started_count > total_tickets):
+        if (self.games_started_count <= 0):
             print('No more tickets')
             return
-        self.games_started_count += 1
+        
+        self.games_started_count -= 1
+        RW.seven_segment_r(self.games_started_count)
         RW.green_leds(self.games_started_count, remove=True)
+
         if game == 'doodle':
             RW.red_leds(15)
             run_doodle()
@@ -146,6 +149,7 @@ class Menu:
         menu.add.button('Fechar', pygame_menu.events.EXIT)
 
         RW.green_leds(7)
+        RW.seven_segment_r(self.games_started_count)
         #Run the menu
         menu.mainloop(self.surface) 
 

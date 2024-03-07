@@ -1,4 +1,5 @@
 import os
+import time as t
 
 active = False
 try:
@@ -76,35 +77,42 @@ class RWEmbCompFuncs:
 
         return display
 
+    def _number_to_binary(self, number):
+        ans = 0
+        for i in range(0, number):
+            ans |= (1 << i)
+        return ans 
+
     @check_active
-    def seven_segment(self, num, display):
+    def seven_segment_r(self, num):
         data = _seven_segment_encoder(num)
         
-        ioctl(self.fd, display)
+        ioctl(self.fd, WR_R_DISPLAY)
         retval = os.write(self.fd, data.to_bytes(4, 'little'))
 
     @check_active
-    def red_leds(self, j):
-        data = 0b111111111111111111
+    def seven_segment_l(self, num):
+        data = _seven_segment_encoder(num)
+        
+        ioctl(self.fd, WR_L_DISPLAY)
+        retval = os.write(self.fd, data.to_bytes(4, 'little'))
 
-        for i in range(0, j):
+    @check_active
+    def red_leds(self, number):
+        data = _number_to_binary(number)
+        for i in range(0, 1):
             ioctl(self.fd, WR_RED_LEDS)
             os.write(self.fd, data.to_bytes(4,'little'))
-            data >>= 1
+            t.sleep(0.1)
         
 
     @check_active
-    def green_leds(self, j, remove = False):
-        data = 0b11111111
-
-        if remove:
-            data = 0b00000000
-
-        for i in range(0, j):
+    def green_leds(self, number):
+        data = _number_to_binary(number)
+        for i in range(0, 1):
             ioctl(self.fd, WR_GREEN_LEDS)
             os.write(self.fd, data.to_bytes(4,'little'))
-            data >>= 1
-        
+            t.sleep(0.1)
 
     @check_active
     def read_button(self):
