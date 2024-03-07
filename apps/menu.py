@@ -64,13 +64,18 @@ default_button_config = {
     'font_size': 80, 'padding': (10, 100), 'margin': (0, 10)
 }
 
+total_tickets = 7
+
 class Menu:
     def __init__(self):
+        self.games_started_count = 0
         self.surface = pygame.display.set_mode((600, 500))
         self.create_menu()
-        self.games_started_count = 0
 
     def start_game(self, game: str):
+        if (self.games_started_count > total_tickets):
+            print('No more tickets')
+            return
         self.games_started_count += 1
         RW.green_leds(self.games_started_count, remove=True)
         if game == 'doodle':
