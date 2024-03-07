@@ -74,6 +74,7 @@ class Menu:
 
     def start_game(self, game: str):
         if (self.games_started_count <= 0):
+            RW.green_leds(0)
             print('No more tickets')
             return
         
