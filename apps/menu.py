@@ -79,7 +79,7 @@ class Menu:
         
         self.games_started_count -= 1
         RW.seven_segment_r(self.games_started_count)
-        RW.green_leds(self.games_started_count, remove=True)
+        RW.green_leds(self.games_started_count)
 
         if game == 'doodle':
             RW.red_leds(15)
