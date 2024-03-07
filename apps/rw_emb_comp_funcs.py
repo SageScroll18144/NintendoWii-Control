@@ -85,21 +85,21 @@ class RWEmbCompFuncs:
 
     @check_active
     def seven_segment_r(self, num):
-        data = _seven_segment_encoder(num)
+        data = self._seven_segment_encoder(num)
         
         ioctl(self.fd, WR_R_DISPLAY)
         retval = os.write(self.fd, data.to_bytes(4, 'little'))
 
     @check_active
     def seven_segment_l(self, num):
-        data = _seven_segment_encoder(num)
+        data = self._seven_segment_encoder(num)
         
         ioctl(self.fd, WR_L_DISPLAY)
         retval = os.write(self.fd, data.to_bytes(4, 'little'))
 
     @check_active
     def red_leds(self, number):
-        data = _number_to_binary(number)
+        data = self._number_to_binary(number)
         for i in range(0, 1):
             ioctl(self.fd, WR_RED_LEDS)
             os.write(self.fd, data.to_bytes(4,'little'))
@@ -108,7 +108,7 @@ class RWEmbCompFuncs:
 
     @check_active
     def green_leds(self, number):
-        data = _number_to_binary(number)
+        data = self._number_to_binary(number)
         for i in range(0, 1):
             ioctl(self.fd, WR_GREEN_LEDS)
             os.write(self.fd, data.to_bytes(4,'little'))
