@@ -5,9 +5,9 @@
 #include "device_state.h"
 #include "trigger_gun.h"
 
-#define MODE 1 //0 -> Board  | 1 -> Control | 2 -> Debug
+#define MODE 0 //0 -> Board  | 1 -> Control | 2 -> Debug
 
-uint8_t broadcastAddress[] = {0x08, 0x3A, 0xF2, 0x8F, 0xAD, 0x24};
+uint8_t broadcastAddress[] = {0x08, 0x3A, 0xF2, 0x8E, 0xFE, 0xEC}; //08:3A:F2:8E:FE:EC
 esp_now_peer_info_t peerInfo;
 
 void setup() {
