@@ -3,6 +3,7 @@ from .sprite_objects import *
 from .ray_casting import ray_casting_walls
 from .drawing import Drawing
 from .interaction import Interaction
+import gc
 
 def run_doom():
     pygame.init()
@@ -45,3 +46,4 @@ def run_doom():
 
         pygame.display.flip()
         clock.tick()
+        #gc.collect()
