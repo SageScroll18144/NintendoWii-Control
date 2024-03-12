@@ -83,36 +83,24 @@ class Menu:
         RW.green_leds(self.games_started_count)
 
         if game == 'doodle':
-            RW.red_leds(15)
-            RW.seven_segment_l(1)
             run_doodle()
         elif game == 'agario':
-            RW.red_leds(1)
-            RW.seven_segment_l(2)
             run_agario()
         elif game == 'doom':
-            RW.red_leds(3)
-            RW.seven_segment_l(3)
             run_doom()
         elif game == 'flappy':
-            RW.red_leds(7)
-            RW.seven_segment_l(4)
             run_flappy()
         elif game == 'space':
-            RW.red_leds(5)
-            RW.seven_segment_l(5)
             run_space_invaders()
         elif game == 'tetris':
-            RW.red_leds(4)
-            RW.seven_segment_l(6)
             run_matris()
         elif game == 'bomber':
-            RW.red_leds(2)
-            RW.seven_segment_l(7)
             run_bomberman()
         else:
             print('Game not found')
-        
+
+        RW.red_leds(0)
+        RW.seven_segment_l(0)
         pygame.display.set_mode((600, 500))
 
     def create_menu(self): 
