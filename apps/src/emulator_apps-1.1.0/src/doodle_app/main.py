@@ -44,13 +44,14 @@ def run_doodle():
     clock = pygame.time.Clock()
     while running:
         clock.tick(fps)
-        game.location.draw()
+        exit0 = game.location.draw()
         pygame.display.flip()
         event = []
         for event_ in pygame.event.get():
             event = event_
             exit1 = game.location.event(event)
             exit2 = game.event(event)     
-            running = exit1 and exit2
+            exit_event = exit1 and exit2
+        running = running and exit_event
 if __name__ == "__main__":
     run_doodle()

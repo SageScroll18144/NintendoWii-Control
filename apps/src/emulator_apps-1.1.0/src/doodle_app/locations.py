@@ -9,6 +9,8 @@ from .config import *
 import os
 base_path = os.path.dirname(__file__)
 
+from .rw_emb_comp_funcs import RWEmbCompFuncs
+
 try:
     import serial
 except:
@@ -79,6 +81,8 @@ class StartLocation(Location):
         self.surfaces.append(self.input_surf)   
 
 
+rw = RWEmbCompFuncs()
+
 # gameplay location
 class GameLocation(Location):
     
@@ -102,6 +106,9 @@ class GameLocation(Location):
         self.window.blit(self.background, (0, 0))
         
         self.monster = None
+        self.life = 15
+        rw.red_leds(self.life)
+        rw.seven_segment_l(self.life)
     
     
     def randomPlatform(self,top = True):
@@ -206,7 +213,14 @@ class GameLocation(Location):
             self.window.blit(self.header, (0,0))
         else:
             #if dead - load exit location
-            self.parent.location = GameLocation(self.parent,self.doodle.name)
+            self.life -= 1
+            rw.red_leds(self.life)
+            rw.seven_segment_l(self.life)
+            if self.life <= 0:
+                return False
+            else:
+                self.parent.location = GameLocation(self.parent,self.doodle.name)
+        return True
 
     def event(self,event):
         if event.type == KEYDOWN:
