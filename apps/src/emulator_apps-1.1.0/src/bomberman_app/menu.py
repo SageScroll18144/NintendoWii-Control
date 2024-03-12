@@ -4,6 +4,8 @@ import pygame_menu
 from .game import game_init
 from .enums.algorithm import Algorithm
 
+from .rw_emb_comp_funcs import RWEmbCompFuncs
+
 COLOR_BACKGROUND = (153, 153, 255)
 COLOR_BLACK = (0, 0, 0)
 COLOR_WHITE = (255, 255, 255)
@@ -24,7 +26,8 @@ en2_alg = Algorithm.DFS
 en3_alg = Algorithm.DIJKSTRA
 show_path = True
 surface = pygame.display.set_mode(WINDOW_SIZE)
-
+life = 2
+rw = RWEmbCompFuncs()
 
 def change_path(value, c):
     global show_path
@@ -52,8 +55,13 @@ def change_enemy3(value, c):
 
 
 def run_game():
-    game_init(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, TILE_SIZE)
-
+    global life
+    global rw
+    if (life > 0):
+        game_init(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, TILE_SIZE)
+    life -= 1
+    rw.seven_segment_l(life)
+    rw.red_leds(life)
 
 def main_background():
     global surface
@@ -62,6 +70,10 @@ def main_background():
 
 def run_bomberman():
     pygame.init()
+    
+    global rw
+    rw.red_leds(2)
+    rw.seven_segment_l(2)
 
     pygame.display.set_caption('Bomberman')
     clock = pygame.time.Clock()
