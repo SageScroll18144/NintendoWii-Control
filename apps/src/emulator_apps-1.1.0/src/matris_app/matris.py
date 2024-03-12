@@ -3,6 +3,7 @@ import pygame
 from pygame import Rect, Surface
 import random
 import os
+from .rw_emb_comp_funcs import RWEmbCompFuncs
 from .kezmenu import kezmenu
 
 from .tetrominoes import list_of_tetrominoes
@@ -630,7 +631,9 @@ def construct_nightmare(size):
 
 def run_matris():
     pygame.init()
-
+    RW = RWEmbCompFuncs()
+    RW.red_leds(4)
+    RW.seven_segment_l(4)
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("MaTris")
     Menu().main(screen)
