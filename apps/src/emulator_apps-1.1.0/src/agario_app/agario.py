@@ -3,6 +3,7 @@ try:
     import serial
 except:
     pass
+from .rw_emb_comp_funcs import RWEmbCompFuncs
 
 def run_agario():
     global cam
@@ -16,6 +17,9 @@ def run_agario():
     # Pygame initialization
     pygame.display.set_caption("{} - v{}".format(NAME, VERSION))
     clock = pygame.time.Clock()
+    rw = RWEmbCompFuncs()
+    rw.red_leds(1)
+    rw.seven_segment_l(1)
 
     try:
         ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
