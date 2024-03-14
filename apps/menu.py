@@ -74,11 +74,60 @@ class Menu:
         self.surface = pygame.display.set_mode((600, 500))
         RW.green_leds(7)
         RW.seven_segment_r(self.games_started_count)
-        
-        self.stop_thread = False
-        self.thread = threading.Thread(target=self.check_switches_and_buttons)
-        self.thread.start()
 
+        if int(RW.read_switches(), 2) == 0:
+            self.stop_thread = False
+            self.thread = threading.Thread(target=self.check_switches_and_buttons)
+            self.thread.start()
+        else: 
+            self.create_menu()
+
+    def create_menu(self): 
+        menu = pygame_menu.Menu(
+            '                    ARCADE GAMES',
+            600, 500, theme=main_theme, columns=2, rows=5
+        )
+
+        ## Column 1
+        menu.add.vertical_margin(5)
+        menu.add.button(
+            '1',lambda: self.start_game('doodle'), background_color=base_images['doodle'],
+            **default_button_config
+        )
+        menu.add.button(
+            '2',lambda: self.start_game('bomber'), background_color=base_images['bomber'],
+            **default_button_config
+        )
+        menu.add.button(
+            '3',lambda: self.start_game('agario'), background_color=base_images['agario'],
+            **default_button_config
+        )
+        menu.add.button(
+            '4',lambda: self.start_game('doom'), background_color=base_images['doom'],
+            **default_button_config
+        )
+
+        ## Column 2
+        menu.add.vertical_margin(5)
+        menu.add.button(
+            '5',lambda: self.start_game('flappy'), background_color=base_images['flappy'],
+            **default_button_config
+        )
+        menu.add.button(
+            '6',lambda: self.start_game('tetris'), background_color=base_images['tetris'],
+            **default_button_config
+        )
+        menu.add.button(
+            '7',lambda: self.start_game('space'), background_color=base_images['space'],
+            **default_button_config
+        )
+        menu.add.button('Fechar', pygame_menu.events.EXIT)
+
+        RW.green_leds(7)
+        RW.seven_segment_r(self.games_started_count)
+        #Run the menu
+        menu.mainloop(self.surface) 
+        
     def start_game(self, game: str):
         if (self.games_started_count <= 0):
             RW.green_leds(0)
@@ -131,10 +180,10 @@ class Menu:
                 self.start_game('tetris')
             elif switch_value == 7 and button_value == 7:
                 self.start_game('space')
-            elif button_value == 1:
+            elif button_value == 14:
                 self.stop_thread = True
 
-            pygame.time.wait(500)  # espera um pouco para não sobrecarregar a CPU
+            pygame.time.wait(100)  # espera um pouco para não sobrecarregar a CPU
 
     def stop(self):
         self.stop_thread = True
