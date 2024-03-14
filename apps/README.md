@@ -1,0 +1,1 @@
+nasm -f elf32 max.asm -o max.o && gcc -m32 -fopenmp -c consoler_runner.c -o consoler_runner.o && gcc -m32 -fopenmp -no-pie consoler_runner.o max.o -o consoler_runner && ./consoler_runner /dev/mydev
