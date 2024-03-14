@@ -163,6 +163,8 @@ class Menu:
             switch_value = int(RW.read_switches(), 2)
             button_value = int(RW.read_button(), 2)
 
+            print(f"switch_value: {switch_value} | button_value: {button_value}")
+
             if switch_value == 1 and button_value == 7:
                 self.start_game('doodle')
             elif switch_value == 2 and button_value == 7:
