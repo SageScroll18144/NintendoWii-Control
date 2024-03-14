@@ -72,7 +72,7 @@ class Menu:
     def __init__(self):
         self.games_started_count = total_tickets
         self.surface = pygame.display.set_mode((600, 500))
-        self.create_menu()
+        #self.create_menu()
         threading.Thread(target=self.check_switches_and_buttons).start()
 
 
