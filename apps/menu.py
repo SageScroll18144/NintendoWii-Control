@@ -14,6 +14,9 @@ from space_invaders_app import run_space_invaders
 
 import threading
 
+import time
+import csv
+
 main_theme = pygame_menu.themes.Theme(
     background_color= 	(18,52,86),
     title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_SIMPLE,
@@ -68,6 +71,7 @@ default_button_config = {
 }
 
 total_tickets = 7
+start_time = time.time()
 
 class Menu:
     def __init__(self):
@@ -210,3 +214,12 @@ if __name__ == '__main__':
     pygame.init()
     RW = RWEmbCompFuncs()
     menu = Menu()
+    
+    player = "PLAYER"
+    pts = (time.time() - start_time) * 100 * (7 - total_tickets)
+
+    with open('score.csv', 'a', newline='') as f:
+        writer = csv.writer(f, delimiter=';')
+
+        # Escreve os dados no arquivo CSV
+        writer.writerow([player, pts])
