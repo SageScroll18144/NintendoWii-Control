@@ -57,7 +57,8 @@ class RWEmbCompFuncs:
             print("Could not open /dev/mydev")
 
     def __del__(self):
-        os.close(self.fd)
+        if (self.active):
+            os.close(self.fd)
 
     def _seven_segment_encoder(self, num):
         display = 0
@@ -119,8 +120,8 @@ class RWEmbCompFuncs:
         ioctl(self.fd, RD_PBUTTONS)
         button = os.read(self.fd, 4)
         button = bin(int.from_bytes(button, 'little'))
-
-        return button
+        translated_button = self.buttons.get(button, "No button pressed")
+        return translated_button
 
     @check_active
     def read_switches(self):

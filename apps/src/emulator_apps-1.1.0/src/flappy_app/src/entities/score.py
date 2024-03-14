@@ -9,6 +9,9 @@ class Score(Entity):
         super().__init__(config)
         self.y = self.config.window.height * 0.1
         self.score = 0
+    
+    def get_score(self) -> int:
+        return self.score
 
     def reset(self) -> None:
         self.score = 0

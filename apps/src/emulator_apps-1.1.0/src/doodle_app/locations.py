@@ -9,18 +9,17 @@ from .config import *
 import os
 base_path = os.path.dirname(__file__)
 
-from .rw_emb_comp_funcs import RWEmbCompFuncs
-
 try:
     import serial
-except:
-    pass
-
-try:
     ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 except:
+    pass
     ser = None 
 
+from .rw_emb_comp_funcs import RWEmbCompFuncs
+
+RW = RWEmbCompFuncs()
+life = 15
 # Base class for location
 class Location(object):
     parent = None
@@ -33,6 +32,7 @@ class Location(object):
         pass
     def draw(self):
         pass
+
 
 
 # first menu location
@@ -76,12 +76,15 @@ class StartLocation(Location):
                 return False
         return True
     
+    def verify_life(self):
+        global life
+        if life <= 0:
+            return False
+        return True
+    
     def showInput(self):
         self.input_surf = Rectangle(300, 100, (0,191,255,200))
         self.surfaces.append(self.input_surf)   
-
-
-rw = RWEmbCompFuncs()
 
 # gameplay location
 class GameLocation(Location):
@@ -104,11 +107,11 @@ class GameLocation(Location):
         self.allsprites.add(self.score_sprite)
         self.header = Rectangle(screen_width, 50, (0,191,255,128))
         self.window.blit(self.background, (0, 0))
-        
+        global life
+        global RW
         self.monster = None
-        self.life = 15
-        rw.red_leds(self.life)
-        rw.seven_segment_l(self.life)
+        RW.red_leds(life)
+        RW.seven_segment_l(life)
     
     
     def randomPlatform(self,top = True):
@@ -212,14 +215,15 @@ class GameLocation(Location):
             self.score_sprite.setText("               %s,    %s" % (self.doodle.name, int(self.doodle.score/10)))
             self.window.blit(self.header, (0,0))
         else:
+            global life
+            life -= 1
             #if dead - load exit location
-            self.life -= 1
-            rw.red_leds(self.life)
-            rw.seven_segment_l(self.life)
-            if self.life <= 0:
-                return False
-            else:
-                self.parent.location = GameLocation(self.parent,self.doodle.name)
+            self.parent.location = GameLocation(self.parent,self.doodle.name)
+    
+    def verify_life(self):
+        global life
+        if life <= 0:
+            return False
         return True
 
     def event(self,event):

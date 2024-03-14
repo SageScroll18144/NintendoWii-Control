@@ -8,7 +8,7 @@ from .config import *
 from .decor import Ground, Barricades
 from .spaceship import Spaceship
 from .ui import Score, LifeCounter, HighScore, GameOver
-
+from .rw_emb_comp_funcs import RWEmbCompFuncs
 
 class PySpaceInvaders:
 
@@ -36,8 +36,13 @@ class PySpaceInvaders:
         self.life_counter = LifeCounter()
         self.game_over = GameOver()
 
+        self.RW = RWEmbCompFuncs()
+
     def play(self):
         clock = pygame.time.Clock()
+
+        self.RW.red_leds(3)
+
         while self.is_playing:
             dt = clock.tick()
 
@@ -77,6 +82,7 @@ class PySpaceInvaders:
         if not self.spaceship.is_active:
             if self.life_counter.life_count > 0:
                 self.life_counter.life_count -= 1
+                self.RW.red_leds(self.life_counter.life_count)
                 self.spaceship.reset()
             else:
                 self._game_over()
@@ -87,8 +93,6 @@ class PySpaceInvaders:
 
         # Count how many updates should be done. If more than one, a warning is shown
         update_count = self.update_time_delay // UPDATE_PERIOD_MS
-        if update_count > 1:
-            print(str(update_count - 1) + " updates are late.")
 
         self.update_time_delay = self.update_time_delay % UPDATE_PERIOD_MS
 
@@ -135,9 +139,6 @@ class PySpaceInvaders:
 
         # We count how many frames we should draw. If more than one, we show a warning.
         frame_count = self.draw_time_delay // DRAW_PERIOD_MS
-        if frame_count > 1:
-            print("Skipping " + str(frame_count - 1) + " frames")
-
         self.draw_time_delay = self.draw_time_delay % DRAW_PERIOD_MS
         return frame_count
 
@@ -315,6 +316,7 @@ class PySpaceInvaders:
     def _game_over(self):
         self.is_game_over = True
         self.is_playing = False
+        pygame.mixer.music.stop()
         if self.score.value > self.high_score.value:
             self.high_score.value = self.score.value
 

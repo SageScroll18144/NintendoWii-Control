@@ -17,13 +17,11 @@ from .utils import GameConfig, Images, Sounds, Window
 
 try:
     import serial
-except:
-    pass
-
-try:
     ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 except:
     ser = None 
+
+from .rw_emb_comp_funcs import RWEmbCompFuncs
 
 class Flappy:
     def __init__(self):
@@ -42,9 +40,15 @@ class Flappy:
             images=images,
             sounds=Sounds(),
         )
+        self.life = 4
+        self.rw = RWEmbCompFuncs()
 
     async def start(self):
         while self.running:
+            self.rw.red_leds(self.life)
+            if (self.life == 0):
+                self.running = False
+                break
             self.background = Background(self.config)
             self.floor = Floor(self.config)
             self.player = Player(self.config)
@@ -103,6 +107,8 @@ class Flappy:
             for i, pipe in enumerate(self.pipes.upper):
                 if self.player.crossed(pipe):
                     self.score.add()
+                    score = self.score.get_score()
+                    self.rw.seven_segment_l(score)
 
             for event in pygame.event.get():
                 self.check_quit_event(event)
@@ -128,6 +134,7 @@ class Flappy:
         self.player.set_mode(PlayerMode.CRASH)
         self.pipes.stop()
         self.floor.stop()
+        self.life -= 1
 
         while self.running:
             for event in pygame.event.get():

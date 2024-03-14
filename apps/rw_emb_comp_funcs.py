@@ -57,7 +57,8 @@ class RWEmbCompFuncs:
             print("Could not open /dev/mydev")
 
     def __del__(self):
-        os.close(self.fd)
+        if (self.active):
+            os.close(self.fd)
 
     def _seven_segment_encoder(self, num):
         display = 0

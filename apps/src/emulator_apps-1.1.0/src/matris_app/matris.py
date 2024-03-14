@@ -13,10 +13,6 @@ from .scores import load_score, write_score
 
 try:
     import serial
-except:
-    pass
-
-try:
     ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
 except:
     ser = None
@@ -47,6 +43,9 @@ TRICKY_CENTERX = WIDTH-(WIDTH-(MATRIS_OFFSET+BLOCKSIZE*MATRIX_WIDTH+BORDERWIDTH*
 
 VISIBLE_MATRIX_HEIGHT = MATRIX_HEIGHT - 2
 
+life = 4
+RW = RWEmbCompFuncs()
+running = True
 
 class Matris(object):
     def __init__(self, screen):
@@ -464,6 +463,15 @@ class Game(object):
         Main loop for game
         Redraws scores and next tetromino each time the loop is passed through
         """
+        global life
+        global RW
+        global running
+        RW.red_leds(life)
+        RW.seven_segment_l(life)
+        life -= 1
+        if (life <= 0):
+            running = False
+            return
         clock = pygame.time.Clock()
 
         self.matris = Matris(screen)
@@ -564,6 +572,7 @@ class Menu(object):
     """
     running = True
     def main(self, screen):
+        print("Running menu")
         clock = pygame.time.Clock()
         menu = kezmenu.KezMenu(
             ['Play!', lambda: Game().main(screen)],
@@ -579,12 +588,13 @@ class Menu(object):
 
         timepassed = clock.tick(30) / 1000.
 
+        global running
         while self.running:
             events = pygame.event.get()
-
+            self.running = running
             for event in events:
                 if event.type == pygame.QUIT:
-                    pygame.quit()
+                    self.running = False
 
             menu.update(events, timepassed)
 
@@ -631,9 +641,6 @@ def construct_nightmare(size):
 
 def run_matris():
     pygame.init()
-    RW = RWEmbCompFuncs()
-    RW.red_leds(4)
-    RW.seven_segment_l(4)
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("MaTris")
     Menu().main(screen)

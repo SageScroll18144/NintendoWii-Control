@@ -28,7 +28,7 @@ class Game():
                     self.location = StartLocation(self)
                 elif isinstance(self.location, StartLocation):
                     return False
-        return True
+        return self.location.verify_life()
                 
 
 # main function
@@ -44,14 +44,15 @@ def run_doodle():
     clock = pygame.time.Clock()
     while running:
         clock.tick(fps)
-        exit0 = game.location.draw()
+        game.location.draw()
         pygame.display.flip()
         event = []
         for event_ in pygame.event.get():
             event = event_
             exit1 = game.location.event(event)
+            if exit1 == None:
+                exit1 = True
             exit2 = game.event(event)     
-            exit_event = exit1 and exit2
-        running = running and exit_event
+            running = exit1 and exit2
 if __name__ == "__main__":
     run_doodle()

@@ -26,7 +26,8 @@ en2_alg = Algorithm.DFS
 en3_alg = Algorithm.DIJKSTRA
 show_path = True
 surface = pygame.display.set_mode(WINDOW_SIZE)
-life = 2
+life = 0
+running = True
 rw = RWEmbCompFuncs()
 
 def change_path(value, c):
@@ -57,11 +58,15 @@ def change_enemy3(value, c):
 def run_game():
     global life
     global rw
+    global running
     if (life > 0):
         game_init(surface, show_path, player_alg, en1_alg, en2_alg, en3_alg, TILE_SIZE)
-    life -= 1
-    rw.seven_segment_l(life)
-    rw.red_leds(life)
+        life -= 1
+        rw.seven_segment_l(life)
+        rw.red_leds(life)
+    else:
+        rw.green_leds(0)
+        rw.seven_segment_l(0)
 
 def main_background():
     global surface
@@ -71,6 +76,7 @@ def main_background():
 def run_bomberman():
     pygame.init()
     
+    global running
     global rw
     rw.red_leds(2)
     rw.seven_segment_l(2)
@@ -160,7 +166,6 @@ def run_bomberman():
     main_menu.add.button('About', about_menu)
     main_menu.add.button('Quit', main_menu.disable)
 
-    running = True
     while running:
 
         clock.tick(FPS)
@@ -176,7 +181,6 @@ def run_bomberman():
             main_menu.mainloop(surface, main_background)
         else:
             running = False
-
         pygame.display.flip()
 
     pygame_menu.events.BACK
