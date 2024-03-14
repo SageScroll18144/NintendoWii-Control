@@ -113,22 +113,22 @@ class Menu:
         menu.add.vertical_margin(5)
         menu.add.button(
             '1',
-            lambda: self.start_game('doodle') if int(RW.read_switches(), 2) == 1 and RW.read_button() == 1 else None,
+            lambda: self.start_game('doodle') if int(RW.read_switches(), 2) == 1 and int(RW.read_button(), 2) == 7 else None,
             background_color=base_images['doodle'],
             **default_button_config
         )
         menu.add.button(
-            '2',lambda: self.start_game('bomber') if int(RW.read_switches(), 2) == 2 and RW.read_button() == 1 else None
+            '2',lambda: self.start_game('bomber') if int(RW.read_switches(), 2) == 2 and int(RW.read_button(), 2) == 7 else None
             , background_color=base_images['bomber'],
             **default_button_config
         )
         menu.add.button(
-            '3',lambda: self.start_game('agario') if int(RW.read_switches(), 2) == 3 and RW.read_button() == 1 else None,
+            '3',lambda: self.start_game('agario') if int(RW.read_switches(), 2) == 3 and int(RW.read_button(), 2) == 7 else None,
               background_color=base_images['agario'],
             **default_button_config
         )
         menu.add.button(
-            '4',lambda: self.start_game('doom') if int(RW.read_switches(), 2) == 4 and RW.read_button() == 1 else None,
+            '4',lambda: self.start_game('doom') if int(RW.read_switches(), 2) == 4 and int(RW.read_button(), 2) == 7 else None,
               background_color=base_images['doom'],
             **default_button_config
         )
@@ -136,23 +136,23 @@ class Menu:
         ## Column 2
         menu.add.vertical_margin(5)
         menu.add.button(
-            '5',lambda: self.start_game('flappy') if int(RW.read_switches(), 2) == 5 and RW.read_button() == 1 else None,
+            '5',lambda: self.start_game('flappy') if int(RW.read_switches(), 2) == 5 and int(RW.read_button(), 2) == 7 else None,
               background_color=base_images['flappy'],
             **default_button_config
         )
         menu.add.button(
-            '6',lambda: self.start_game('tetris') if int(RW.read_switches(), 2) == 6 and RW.read_button() == 1 else None, 
+            '6',lambda: self.start_game('tetris') if int(RW.read_switches(), 2) == 6 and int(RW.read_button(), 2) == 7 else None, 
             background_color=base_images['tetris'],
             **default_button_config
         )
         menu.add.button(
-            '7',lambda: self.start_game('space') if int(RW.read_switches(), 2) == 7 and RW.read_button() == 1 else None,
+            '7',lambda: self.start_game('space') if int(RW.read_switches(), 2) == 7 and int(RW.read_button(), 2) == 7 else None,
               background_color=base_images['space'],
             **default_button_config
         )
         menu.add.button(
             'Fechar',
-            lambda: pygame_menu.events.EXIT if int(RW.read_switches(), 2) == 1 and RW.read_button() == 1 else None
+            lambda: pygame_menu.events.EXIT if int(RW.read_switches(), 2) == 1 and int(RW.read_button(), 2) == 14 else None
         )
         RW.green_leds(7)
         RW.seven_segment_r(self.games_started_count)
