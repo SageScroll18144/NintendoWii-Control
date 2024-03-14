@@ -216,7 +216,7 @@ if __name__ == '__main__':
     menu = Menu()
     
     player = "PLAYER"
-    pts = (time.time() - start_time) * 100 * (7 - total_tickets)
+    pts = 1.5 * (7 - total_tickets) + (time.time() - start_time)
 
     with open('score.csv', 'a', newline='\n') as f:
         writer = csv.writer(f, delimiter=';')
