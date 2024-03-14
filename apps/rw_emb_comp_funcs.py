@@ -129,3 +129,6 @@ class RWEmbCompFuncs:
         switches = bin(int.from_bytes(switches, 'little'))  
 
         return switches
+    
+    def is_active(self):
+        return self.active
