@@ -72,7 +72,8 @@ class Menu:
     def __init__(self):
         self.games_started_count = total_tickets
         self.surface = pygame.display.set_mode((600, 500))
-        #self.create_menu()
+        RW.green_leds(7)
+        RW.seven_segment_r(self.games_started_count)
         threading.Thread(target=self.check_switches_and_buttons).start()
 
 
@@ -106,57 +107,6 @@ class Menu:
         RW.red_leds(0)
         RW.seven_segment_l(0)
         pygame.display.set_mode((600, 500))
-
-    def create_menu(self): 
-        menu = pygame_menu.Menu(
-            '                    ARCADE GAMES',
-            600, 500, theme=main_theme, columns=2, rows=5
-        )
-
-        ## Column 1
-        menu.add.vertical_margin(5)
-        menu.add_image(base_images['doodle'], scale=(0.5, 0.5))
-        menu.add.button(
-            '2',lambda: self.start_game('bomber') if int(RW.read_switches(), 2) == 2 and int(RW.read_button(), 2) == 7 else None
-            , background_color=base_images['bomber'],
-            **default_button_config
-        )
-        menu.add.button(
-            '3',lambda: self.start_game('agario') if int(RW.read_switches(), 2) == 3 and int(RW.read_button(), 2) == 7 else None,
-              background_color=base_images['agario'],
-            **default_button_config
-        )
-        menu.add.button(
-            '4',lambda: self.start_game('doom') if int(RW.read_switches(), 2) == 4 and int(RW.read_button(), 2) == 7 else None,
-              background_color=base_images['doom'],
-            **default_button_config
-        )
-
-        ## Column 2
-        menu.add.vertical_margin(5)
-        menu.add.button(
-            '5',lambda: self.start_game('flappy') if int(RW.read_switches(), 2) == 5 and int(RW.read_button(), 2) == 7 else None,
-              background_color=base_images['flappy'],
-            **default_button_config
-        )
-        menu.add.button(
-            '6',lambda: self.start_game('tetris') if int(RW.read_switches(), 2) == 6 and int(RW.read_button(), 2) == 7 else None, 
-            background_color=base_images['tetris'],
-            **default_button_config
-        )
-        menu.add.button(
-            '7',lambda: self.start_game('space') if int(RW.read_switches(), 2) == 7 and int(RW.read_button(), 2) == 7 else None,
-              background_color=base_images['space'],
-            **default_button_config
-        )
-        menu.add.button(
-            'Fechar',
-            lambda: pygame_menu.events.EXIT if int(RW.read_switches(), 2) == 1 and int(RW.read_button(), 2) == 14 else None
-        )
-        RW.green_leds(7)
-        RW.seven_segment_r(self.games_started_count)
-        #Run the menu
-        menu.mainloop(self.surface) 
     
     def check_switches_and_buttons(self):
         while True:
@@ -169,7 +119,14 @@ class Menu:
                 self.start_game('doodle')
             elif switch_value == 2 and button_value == 7:
                 self.start_game('bomber')
-            # adicione mais condições aqui para outros jogos
+            elif switch_value == 4 and button_value == 7:
+                self.start_game('doom')
+            elif switch_value == 5 and button_value == 7:
+                self.start_game('flappy')
+            elif switch_value == 6 and button_value == 7:
+                self.start_game('tetris')
+            elif switch_value == 7 and button_value == 7:
+                self.start_game('space')
 
             pygame.time.wait(100)  # espera um pouco para não sobrecarregar a CPU
 
