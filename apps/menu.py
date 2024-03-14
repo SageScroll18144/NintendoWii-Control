@@ -165,6 +165,13 @@ class Menu:
         RW.red_leds(0)
         RW.seven_segment_l(0)
         pygame.display.set_mode((600, 500))
+
+        # Carrega a imagem
+        image = pygame.image.load('images/screen.png')
+        # Desenha a imagem na superfície
+        self.surface.blit(image, (0, 0))
+        # Atualiza a exibição
+        pygame.display.flip()
     
     def check_switches_and_buttons(self):
         while not self.stop_thread:
