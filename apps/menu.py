@@ -119,6 +119,8 @@ class Menu:
                 self.start_game('doodle')
             elif switch_value == 2 and button_value == 7:
                 self.start_game('bomber')
+            elif switch_value == 3 and button_value == 7:
+                self.start_game('agario')
             elif switch_value == 4 and button_value == 7:
                 self.start_game('doom')
             elif switch_value == 5 and button_value == 7:
