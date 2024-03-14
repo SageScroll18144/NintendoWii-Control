@@ -14,6 +14,9 @@ from space_invaders_app import run_space_invaders
 
 import threading
 
+import time
+import csv
+
 main_theme = pygame_menu.themes.Theme(
     background_color= 	(18,52,86),
     title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_SIMPLE,
@@ -68,6 +71,7 @@ default_button_config = {
 }
 
 total_tickets = 7
+start_time = time.time()
 
 class Menu:
     def __init__(self):
@@ -76,9 +80,9 @@ class Menu:
         RW.green_leds(7)
         RW.seven_segment_r(self.games_started_count)
 
-        if int(RW.read_switches(), 2) == 0:
+        if RW.is_active():
             # Carrega a imagem
-            image = pygame.image.load('images/screen.png')
+            image = pygame.image.load(images_url['screen'])
             # Desenha a imagem na superfície
             self.surface.blit(image, (0, 0))
             # Atualiza a exibição
@@ -165,13 +169,20 @@ class Menu:
         RW.red_leds(0)
         RW.seven_segment_l(0)
         pygame.display.set_mode((600, 500))
+
+        # Carrega a imagem
+        image = pygame.image.load(images_url['screen'])
+        # Desenha a imagem na superfície
+        self.surface.blit(image, (0, 0))
+        # Atualiza a exibição
+        pygame.display.flip()
     
     def check_switches_and_buttons(self):
         while not self.stop_thread:
             switch_value = int(RW.read_switches(), 2)
             button_value = int(RW.read_button(), 2)
 
-            print(f"switch_value: {switch_value} | button_value: {button_value}")
+            #print(f"switch_value: {switch_value} | button_value: {button_value}")
 
             if switch_value == 1 and button_value == 7:
                 self.start_game('doodle')
@@ -203,3 +214,12 @@ if __name__ == '__main__':
     pygame.init()
     RW = RWEmbCompFuncs()
     menu = Menu()
+    
+    player = "PLAYER"
+    pts = 1.5 * (total_tickets - menu.games_started_count) + (time.time() - start_time)
+
+    with open('score.csv', 'a', newline='\n') as f:
+        writer = csv.writer(f, delimiter=';')
+
+        # Escreve os dados no arquivo CSV
+        writer.writerow([player, pts])
