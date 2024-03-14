@@ -218,7 +218,7 @@ if __name__ == '__main__':
     player = "PLAYER"
     pts = (time.time() - start_time) * 100 * (7 - total_tickets)
 
-    with open('score.csv', 'a', newline='') as f:
+    with open('score.csv', 'a', newline='\n') as f:
         writer = csv.writer(f, delimiter=';')
 
         # Escreve os dados no arquivo CSV
