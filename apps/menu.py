@@ -88,6 +88,7 @@ class Menu:
             # Atualiza a exibição
             pygame.display.flip()
             self.create_menu()
+            menu.mainloop(self.surface)
 
     def create_menu(self): 
         menu = pygame_menu.Menu(
