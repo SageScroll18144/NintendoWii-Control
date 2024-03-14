@@ -115,12 +115,7 @@ class Menu:
 
         ## Column 1
         menu.add.vertical_margin(5)
-        menu.add.button(
-            '1',
-            lambda: self.start_game('doodle') if int(RW.read_switches(), 2) == 1 and int(RW.read_button(), 2) == 7 else None,
-            background_color=base_images['doodle'],
-            **default_button_config
-        )
+        menu.add_image(base_images['doodle'], scale=(0.5, 0.5))
         menu.add.button(
             '2',lambda: self.start_game('bomber') if int(RW.read_switches(), 2) == 2 and int(RW.read_button(), 2) == 7 else None
             , background_color=base_images['bomber'],
