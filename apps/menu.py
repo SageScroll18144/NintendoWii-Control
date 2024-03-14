@@ -74,8 +74,10 @@ class Menu:
         self.surface = pygame.display.set_mode((600, 500))
         RW.green_leds(7)
         RW.seven_segment_r(self.games_started_count)
-        threading.Thread(target=self.check_switches_and_buttons).start()
-
+        
+        self.stop_thread = False
+        self.thread = threading.Thread(target=self.check_switches_and_buttons)
+        self.thread.start()
 
     def start_game(self, game: str):
         if (self.games_started_count <= 0):
@@ -109,7 +111,7 @@ class Menu:
         pygame.display.set_mode((600, 500))
     
     def check_switches_and_buttons(self):
-        while True:
+        while not self.stop_thread:
             switch_value = int(RW.read_switches(), 2)
             button_value = int(RW.read_button(), 2)
 
@@ -129,12 +131,19 @@ class Menu:
                 self.start_game('tetris')
             elif switch_value == 7 and button_value == 7:
                 self.start_game('space')
+            elif button_value == 1:
+                self.stop_thread = True
 
-            pygame.time.wait(100)  # espera um pouco para não sobrecarregar a CPU
+            pygame.time.wait(500)  # espera um pouco para não sobrecarregar a CPU
+
+    def stop(self):
+        self.stop_thread = True
+        self.thread.join()
+
+        pygame.quit()
+        quit()
 
 if __name__ == '__main__':
     pygame.init()
     RW = RWEmbCompFuncs()
     menu = Menu()
-    pygame.quit()
-    quit()
