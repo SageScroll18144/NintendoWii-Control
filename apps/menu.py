@@ -77,18 +77,17 @@ class Menu:
         RW.seven_segment_r(self.games_started_count)
 
         if int(RW.read_switches(), 2) == 0:
-            self.stop_thread = False
-            self.thread = threading.Thread(target=self.check_switches_and_buttons)
-            self.thread.start()
-        else: 
             # Carrega a imagem
-            image = pygame.image.load(images_url['screen'])
+            image = pygame.image.load('images/screen.png')
             # Desenha a imagem na superfície
             self.surface.blit(image, (0, 0))
             # Atualiza a exibição
             pygame.display.flip()
+            self.stop_thread = False
+            self.thread = threading.Thread(target=self.check_switches_and_buttons)
+            self.thread.start()
+        else: 
             self.create_menu()
-            menu.mainloop(self.surface)
 
     def create_menu(self): 
         menu = pygame_menu.Menu(
