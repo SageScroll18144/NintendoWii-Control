@@ -35,7 +35,8 @@ images_url = {
     'bomber': './images/bomberman.jpg',
     'space': './images/SpaceInvaders.png',
     'tetris': './images/tetris.jpg',
-    'doom': './images/doom.jpg'
+    'doom': './images/doom.jpg',
+    'screen': './images/screen.png'
 }
 
 base_images = {
@@ -80,6 +81,12 @@ class Menu:
             self.thread = threading.Thread(target=self.check_switches_and_buttons)
             self.thread.start()
         else: 
+            # Carrega a imagem
+            image = pygame.image.load(images_url['screen'])
+            # Desenha a imagem na superfície
+            self.surface.blit(image, (0, 0))
+            # Atualiza a exibição
+            pygame.display.flip()
             self.create_menu()
 
     def create_menu(self): 
