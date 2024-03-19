@@ -13,7 +13,7 @@
 /* meta information */
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("mfbsouza");
+MODULE_AUTHOR("ffss");
 MODULE_DESCRIPTION("simple pci driver for DE2i-150 dev board");
 
 /* driver constants */
