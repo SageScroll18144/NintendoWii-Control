@@ -3,7 +3,6 @@ try:
     import serial
 except:
     pass
-from .rw_emb_comp_funcs import RWEmbCompFuncs
 
 def run_agario():
     global cam
