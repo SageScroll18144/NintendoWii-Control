@@ -9,7 +9,7 @@
 /* meta information */
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("mfbsouza");
+MODULE_AUTHOR("ffss");
 MODULE_DESCRIPTION("char device driver");
 
 /* functions signature */
