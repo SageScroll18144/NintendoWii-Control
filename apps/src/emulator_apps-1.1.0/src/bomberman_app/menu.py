@@ -26,7 +26,7 @@ en2_alg = Algorithm.DFS
 en3_alg = Algorithm.DIJKSTRA
 show_path = True
 surface = pygame.display.set_mode(WINDOW_SIZE)
-life = 0
+life = 2
 running = True
 rw = RWEmbCompFuncs()
 
